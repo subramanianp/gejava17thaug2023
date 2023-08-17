@@ -1,0 +1,199 @@
+Applets:
+
+Applets are java programs which can run within a browser.
+
+Applications:
+
+Java Programs which can run outside the browser.
+
+JRE----------Java Runtime Environment.
+
+The platform independence of java is achieved through a platform dependent JRE.
+
+JRE is platform depedent.
+
+JRE contains
+
+1. Instruction Set
+2. Register Set
+3. Stack Definition
+4. Heap Definition
+
+When java code is compiled, it is converted into a platform independent bytecode.
+	compilation
+.java--------------->.class (byte code)
+
+This bytecode is run by the JRE.
+
+JRE---------------(JVM+ System Libraries)
+
+JVM------------Java Virtual Machine-------Interprets the java bytecode into runtime instruction.
+
+class loader-------------dynamically loads the classes into memory
+byte code verifier-------verifies whether the byte code is in correct format.
+
+
+procedural programming:
+Follows a top down approach. A main function calles other subroutines or functions.
+
+Examples: C,Fortran,Pascal
+
+object oriented programming:
+Object is the building block of an application.
+Any real world component is modelled as an object.
+Any real world component has state and behaviour.
+For example, if person is a real word component, his name and age are examples of state and speaking and  walking are examples of behaviours.
+In object oriented programming, the state is modelled as data and behaviour is modelled as function(method).
+
+The data and the functions(methods) which act on those data are encapsulated within a class.
+
+Examples: C++,Java,C#
+
+
+functional programming:
+A function is used as the building block of an application.
+Supports:
+a function being as an argument to another function
+a function can return another function.
+anonymous functions(functions without name)
+
+Examples: Scala,Groovy,Python
+
+Class is blueprint of the object.
+Object is instance of a class.
+
+Employee e1=new Employee() is equivalent to the following 2 statements.
+
+Employee e1; //declares the e1 is as a reference variable of type Employee
+e1=new Employee();//creates an object of Employee and assigns it to the variable e1.
+
+
+A reference variable can point to an object.
+The new operator dynamically allocates memory for the object.
+
+new constructor()
+
+
+this------------denotes the  current object.
+
+constructor()------special method which has the same name as the class.
+It can be invoked only once in the life cycle of an object.
+It is invoked only during the creation of the  object with new operator.
+
+ref_variable=new constructor();
+
+All the classes have a default constructor with the following syntax.
+
+class A{
+}
+
+is equivalent to 
+
+class A{
+	A()
+	{
+	}
+}
+
+A a1=new A();
+
+Constructor does not have a return type.
+	
+javap--------------lists the data members ,constructors and methods of the class.
+
+overloading:
+
+We can have more than one method with the same name. The methods differ based on the arguments passed.
+
+
+When a constructor is not defined in a class, a default constructor is automatically provided by 
+the compiler.
+
+So 
+
+class A{
+}
+
+is equivalent to 
+
+class A{
+	A()
+	{
+	}
+}
+
+
+When a constructor is already in a class, compiler will not provide a default constructor.
+
+The class,
+class A{
+	A(int x)
+	{
+	}
+}
+will not have a default constructor.
+
+If you want to add a no argument constructor , it should be explicitly added as shown below.
+
+class A{
+	A(int x)
+	{
+	}
+	A()
+	{
+	}
+}
+
+
+
+Naming conventions:
+
+class name---------camel case
+variables/methods----------lower camel case
+packages-------lower case
+constants/enums---upper case
+
+package com.training.ge;
+
+class CompanyDetails{
+	private int discountRate;
+	public static final String COMPANY_NAME="GE"; 
+}
+
+
+package:
+
+Package is a collection of classes & interfaces grouped under a common name.
+package name can have hierarchies.
+
+package pack1;
+package com.pack1;
+
+package com.training.ge;
+
+Each . symbol denotes a subfolder in the underlying file system.
+
+In java, it is mandatory that if the class is public, the class name and filename should be same.
+ie 
+
+public class A{
+}
+
+should be defined in a file called A.java
+
+
+When a class is not part of a package, it is said to be in the default package.
+
+
+classpath option is used to specify where to look for the class files.
+
+
+
+jar cvf jar_file list_of_classes
+
+
+c------create
+v------verbose(detailed info)
+f------file
+
+
