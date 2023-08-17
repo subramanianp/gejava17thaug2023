@@ -1,0 +1,496 @@
+https://drive.google.com/drive/folders/12b3u2CI5nbTxQFAzQNawIFnzxGBEGzIh?usp=sharing
+
+https://github.com/subramanianp/gejava17thaug2023.git
+
+    package com.ge.training.oops;
+    
+    class A{
+    private int i;
+    A(int i)
+    {
+        this.i=i;
+    }
+    void print() {
+        System.out.println("A[i="+i+"]");
+    }
+    void increment() {
+        i++;
+    }
+    public void finalize()
+    {
+        System.out.println("Garbage collecting the object with value "+i);
+    }
+}
+    
+    class Sample{
+        void change(int i) {
+            i++;
+        }
+        void change(A a) {
+            a.increment();
+        }
+    }
+    
+    public class PassingValues {
+    public static void main(String[] args) {
+        Sample sample=new Sample();
+        A a=new A(10);
+        int x=20;
+        a.print();
+        System.out.println(x);
+        sample.change(x);
+        sample.change(a);
+        a.print();
+        System.out.println(x);
+    }
+    }
+    
+    
+
+
+package com.ge.training.oops;
+
+public class RefTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        A a1=new A(10);
+        A a2=a1;//both the reference variables point to the same object.
+        a1.increment();
+        a1.print();//prints 11
+        a2.print();//prints 11
+
+        a2.increment();
+        a1.print();//prints 12
+        a2.print();//prints 12
+        a1=new A(20);//a1 now points to the object with value 20 but a2 still points to object with
+        //value 12  
+        a1.print();//prints 20
+        a2.print();//prints 12
+        a2=null;//a2 does not point to any object.
+        a1=new A(30);
+        System.gc();//not enforcing gc but a suggestion.
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }       
+        public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        A a1=new A(10);
+        A a2=a1;//both the reference variables point to the same object.
+        a1.increment();
+        a1.print();//prints 11
+        a2.print();//prints 11
+
+        a2.increment();
+        a1.print();//prints 12
+        a2.print();//prints 12
+        a1=new A(20);//a1 now points to the object with value 20 but a2 still points to object with
+        //value 12  
+        a1.print();//prints 20
+        a2.print();//prints 12
+        a2=null;//a2 does not point to any object.
+        a1=new A(30);
+        System.gc();//not enforcing gc but a suggestion.
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }       
+    }
+
+}
+
+
+public void print() {
+        System.out.println(plotNumber+","+street);
+        System.out.println("location: "+location);
+        System.out.println("city:"+city);
+    }
+    
+    
+    public class Person {
+    private String name;
+    private String age;
+    private Address address;
+    
+    
+
+}
+
+
+public void print()
+    {
+        System.out.println("Name:"+name);
+        System.out.println("Age:"+age);
+        System.out.println("Address");
+        address.print();
+    }
+    
+    
+    
+public void print() {
+        super.print();
+        System.out.println("Employee Id:"+empId);
+        System.out.println("Salary:"+salary);
+    }
+    
+    
+    package com.ge.training.oops;
+
+public class InheritanceTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        Person p1=new Person("Arvind", 21, new Address(1214, "G-10th Street", "Hebbal", "Bangalore"));
+        p1.print();
+        Address a1=new Address(4422,"Nethaji road","Bandra East","Mumbai");
+        Employee e1=new Employee("Surya", 35, 
+                a1, 1001, 40000);
+        e1.print();
+
+    }
+
+}
+
+
+package com.ge.training.oops;
+class X{
+    int i=10;
+}
+
+class Y extends X{
+    int i=20;
+    void print()
+    {
+        int i=30;
+        System.out.println("i="+i);
+        System.out.println("i="+this.i);
+        System.out.println("i="+super.i);
+    }
+}
+public class InheritanceTest2 {
+    public static void main(String[] args) {
+        Y y1=new Y();
+        y1.print();
+    }
+
+}
+
+
+package com.ge.training.oops;
+
+class P{
+    public String toString() {
+        return "Object of type P";
+    }
+}
+
+class R{
+    private int i;
+    private int j;
+    public R(int i, int j) {
+        super();
+        this.i = i;
+        this.j = j;
+    }
+    
+    public String toString() {
+        return "R [i=" + i + ", j=" + j + "]";
+    }
+    
+    
+    
+    
+}
+public class ToStringTest {
+public static void main(String[] args) {
+    P p=new P();
+    System.out.println(p);
+    R r=new R(10,20);
+    System.out.println(r);
+}
+}
+
+
+package com.ge.training.polymorphism;
+
+class Person{
+    void test()
+    {
+        System.out.println("testing person");
+    }
+}
+
+class Employee extends Person{
+        void test()
+        {
+            System.out.println("testing employee");
+        }
+}
+
+class Manager extends Employee{
+    void test()
+    {
+        System.out.println("testing manager");
+    }
+}
+
+class Utility{
+    void process(Person p)
+    {
+        p.test();
+        //remaining logic
+    }
+}
+
+public class PoymorphismTest1 {
+public static void main(String[] args) {
+    Employee e=new Employee();
+    Person p=new Person();
+    Manager m=new Manager();
+    Utility u=new Utility();
+    u.process(p);
+    u.process(e);
+    u.process(m);
+}
+}
+
+
+OverrideTest.java
+
+
+class A{
+    void print(){
+        System.out.println("print method of A");
+    }
+}
+
+class B extends A{
+    @Override
+    void prnt(){
+        System.out.println("print method of B");
+    }
+}
+
+class OverrideTest{
+    public static void main(String[] args)
+    {
+    A a=new B();
+    a.print();
+    }
+}
+
+
+package com.ge.training.polymorphism;
+
+class Person{
+    private String name;
+    
+    public Person(String name) {
+        super();
+        this.name = name;
+    }
+
+    void test()
+    {
+        System.out.println("testing person");
+    }
+}
+
+class Employee extends Person{
+    private int empId;
+    private double salary;
+
+    public Employee(String name, int empId, double salary) {
+        super(name);
+        this.empId = empId;
+        this.salary = salary;
+    }
+
+    @Override
+    void test() {
+        // TODO Auto-generated method stub
+        System.out.println("testing employee");
+    }
+        /*void test()
+        {
+            System.out.println("testing employee");
+        }*/
+    
+    public double getSalary() {
+        return salary;
+    }
+}
+
+class Manager extends Employee{
+    private String location;
+    
+    
+    public Manager(String name, int empId, double salary, String location) {
+        super(name, empId, salary);
+        this.location = location;
+    }
+
+
+    void test()
+    {
+        System.out.println("testing manager");
+    }
+}
+
+class Utility{
+    void process(Person p)
+    {
+        p.test();
+        //remaining logic
+    }
+    double calculateBonus(Employee e)
+    {
+        double bonus=0;
+        if(e instanceof Manager) {
+            bonus=0.40*e.getSalary();
+        }
+        else if(e instanceof Employee) {
+            bonus=0.30*e.getSalary();
+        }
+        return bonus;
+    }
+}
+
+public class PoymorphismTest1 {
+public static void main(String[] args) {
+/*  Employee e=new Employee();
+    Person p=new Person();
+    Manager m=new Manager();
+    Utility u=new Utility();
+    u.process(p);
+    u.process(e);
+    u.process(m);*/
+    Employee e1=new Employee("Arvind", 1001, 50000);
+    Manager m1=new Manager("Suresh", 1002, 80000, "Karnataka");
+    Utility u=new Utility();
+    System.out.println("Bonus for employee e1:"+u.calculateBonus(e1));
+    System.out.println("Bonus for manager m1:"+u.calculateBonus(m1));
+
+}
+}
+
+
+
+
+double calculateBonus(Employee e)
+    {
+        double bonus=0;
+        if(e instanceof Employee) {
+            bonus=0.30*e.getSalary();
+        }
+        else if(e instanceof Manager) {
+            bonus=0.40*e.getSalary();
+        }
+         
+        return bonus;
+    }
+    
+    
+    package com.ge.training.polymorphism;
+class A{
+    static int i;
+    
+    static void test() {
+        System.out.println("static method of A");
+    }
+}
+
+
+
+public class StaticTest {
+public static void main(String[] args) {
+    A a1=new A();
+    A a2=new A();
+    A a3=new A();
+    a1.i=10;
+    a2.i=20;
+    a3.i=30;
+    System.out.println(a1.i+a2.i+a3.i);
+    System.out.println(A.i);
+    A.test();
+}
+}
+
+
+abstract class Animal{
+    abstract String color();
+    abstract int lifeCycleTime();
+    
+    void describe() {
+        System.out.println("Color: "+color());
+        System.out.println("Life Cycle Time: "+lifeCycleTime()+" years");
+    }
+}
+
+
+
+
+package com.ge.training.polymorphism;
+abstract class Animal{
+    abstract String color();
+    abstract int lifeCycleTime();
+    
+    void describe() {
+        System.out.println("Color: "+color());
+        System.out.println("Life Cycle Time: "+lifeCycleTime()+" years");
+    }
+}
+
+class Rabbit extends Animal{
+
+    @Override
+    String color() {
+        // TODO Auto-generated method stub
+        return "White";
+    }
+
+    @Override
+    int lifeCycleTime() {
+        // TODO Auto-generated method stub
+        return 10;
+    }
+    
+}
+
+class Elephant extends Animal{
+
+    @Override
+    String color() {
+        // TODO Auto-generated method stub
+        return "Black";
+    }
+
+    @Override
+    int lifeCycleTime() {
+        // TODO Auto-generated method stub
+        return 40;
+    }
+    
+}
+
+public class AbstractTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Animal a=new Rabbit();
+        a.describe();
+        a=new Elephant();
+        a.describe();
+    }
+
+}
+
+
+
+
