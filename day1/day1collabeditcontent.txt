@@ -1,0 +1,317 @@
+C:\Users\ADMIN>javac -version
+javac 1.8.0_202
+
+C:\Users\ADMIN>java -version
+
+
+C:\Users\ADMIN>echo %JAVA_HOME%
+C:\Program Files\Java\jdk1.8.0_202
+
+C:\Users\ADMIN>path
+
+First.java
+
+class A{
+    public static void main(String[] args)
+    {
+    System.out.println("Welcome to Java");
+    }
+}
+
+javac First.java
+
+java A
+
+
+First.java
+
+class A{
+    public static void main(String[] args)
+    {
+    System.out.println("Welcome to Java");
+    }
+}
+
+class B{
+}
+
+class C{
+}
+
+class D{
+    public static void main(String[] args)
+    {
+    System.out.println("This is class D");
+    }
+}
+
+
+
+Second.java
+
+class Employee{
+    private int id;
+    private String name;
+    private String designation;
+
+
+    public void assignValues(int id,String name,String designation)
+    {
+    this.id=id;//this.id denotes the instance variable and id denotes the local variable
+    this.name=name;
+    this.designation=designation;
+    }
+
+    public void print()
+    {
+    System.out.println("Id:"+id);
+    System.out.println("Name:"+name);
+    System.out.println("Designation:"+designation);
+    }
+}
+
+class Second{
+    public static void main(String[] args)
+    {
+    Employee e1;
+    e1=new Employee();
+    e1.assignValues(1001,"Rajiv","Developer");
+    Employee e2=new Employee();
+    e2.assignValues(1002,"Suresh","Accountant");
+    
+    e1.print();
+    e2.print();
+    }
+}
+
+
+
+
+
+javac Second.java
+
+java Second
+
+javap Employee
+
+class Employee{
+    private int id;
+    private String name;
+    private String designation;
+    
+    Employee(int id)
+    {
+    this.id=id;
+    }
+
+    Employee(int id,String name)
+    {
+    //this.id=id;//invokes Employee(id)
+    this(id);   
+    this.name=name;
+    }
+    Employee(int id,String name,String designation)
+    {
+    /*this.id=id;
+    this.name=name;*/
+    this(id,name);//invokes Employee(id,name)
+    this.designation=designation;
+    }
+    Employee()
+    {
+    }
+
+    public void assignValues(int id,String name,String designation)
+    {
+    this.id=id;//this.id denotes the instance variable and id denotes the local variable
+    this.name=name;
+    this.designation=designation;
+    }
+
+    public void print()
+    {
+    System.out.println("Id:"+id);
+    System.out.println("Name:"+name);
+    System.out.println("Designation:"+designation);
+    }
+}
+
+class Third{
+    public static void main(String[] args)
+    {
+    Employee e1;
+    e1=new Employee(1001);
+    
+    Employee e2=new Employee(1002,"Surya");
+    
+    Employee e3=new Employee(1003,"Ramesh","Accountant");
+    e1.print();
+    e2.print();
+    e3.print();
+    Employee e4=new Employee();
+    e4.print();
+    }
+}
+
+
+Fourth.java
+
+package pack1;
+public class Fourth{
+    public void print()
+    {
+    System.out.println("method print of Fourth under pack1");
+    }
+}
+Fifth.java
+
+package pack1;
+public class Fifth{
+    public void print()
+    {
+    System.out.println("method print of Fifth under pack1");
+    }
+}
+
+
+
+javac -d . Fourth.java
+
+javac -d . Fifth.java
+
+PackageTest.java
+
+
+
+/*import pack1.Fourth;
+import pack1.Fifth;
+*/
+import pack1.*; //not a reccommended practice
+class PackageTest{
+    public static void main(String[] args)
+    {
+    Fourth fourth=new Fourth();
+    Fifth fifth=new Fifth();
+    fourth.print();
+    fifth.print();
+    }
+}
+
+
+javac -classpath c:\test PackageTest.java
+
+C:\javatraining>java -classpath c:\test;c:\javatraining PackageTest
+
+
+C:\javatraining>java -classpath c:\test;. PackageTest
+
+
+C:\javatraining>set CLASSPATH=c:\test;c:\javatraining
+
+C:\javatraining>java PackageTest
+
+Sixth.java
+
+package com.ge.training;
+public class Sixth{
+    public void test()
+    {
+    System.out.println("test method in Sixth under package com.ge.training");
+    }
+}
+
+javac -d . Sixth.java
+
+PackageTest.java
+
+
+import pack1.Fourth;
+import pack1.Fifth;
+import com.ge.training.Sixth;
+
+//import pack1.*; //not a reccommended practice
+class PackageTest{
+    public static void main(String[] args)
+    {
+    Fourth fourth=new Fourth();
+    Fifth fifth=new Fifth();
+    fourth.print();
+    fifth.print();
+    Sixth sixth=new Sixth();
+    sixth.test();
+    }
+}
+
+
+
+C:\javatraining>javac -classpath c:\test;c:\javatraining PackageTest.java
+
+C:\javatraining>java -classpath c:\test;c:\javatraining PackageTest
+
+
+javap com.ge.first.Sample
+
+package com.ge.third;
+
+public class Next {
+    public void test()
+    {
+        System.out.println("test method of Next unxer com.ge.third");
+    }
+}
+
+
+C:\jarfiles>jar tvf test.jar
+
+import com.ge.first.Sample;
+import com.ge.third.Next;
+
+public class PackageTest2 {
+
+    public static void main(String[] args) {
+        Sample s=new Sample();
+        Next n=new Next();
+        s.print();
+        n.test();
+    }
+}
+
+
+javac -classpath c:\jarfiles\test.jar PackageTest2.java
+
+java -classpath c:\jarfiles\test.jar;. PackageTest2
+
+C:\test>jar cvf A.jar pack1\*.class
+
+jar tvf A.jar
+
+
+package com.ge.test;
+
+import com.ge.first.Sample;
+import com.ge.third.Next;
+
+import pack1.Fifth;
+import pack1.Fourth;
+
+public class Test1 {
+
+    public static void main(String[] args) {
+        Sample s=new Sample();
+        Next n=new Next();
+        s.print();
+        n.test();
+        Fourth fourth=new Fourth();
+        Fifth fifth=new Fifth();
+        fourth.print();
+        fifth.print();
+    }
+}
+
+
+https://drive.google.com/drive/folders/12b3u2CI5nbTxQFAzQNawIFnzxGBEGzIh?usp=sharing
+
+https://github.com/subramanianp/gejava17thaug2023.git
+
+
+
