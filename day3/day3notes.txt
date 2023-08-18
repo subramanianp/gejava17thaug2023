@@ -1,0 +1,218 @@
+final:
+
+final variable: acts like constant.
+
+final method: can't be overridden.
+
+final class:  can't be extended.
+
+When an object is created , each data member is assigned a default value if it is not explicitly initialized.
+
+type		default value
+integers		0
+floating point		0.0
+boolean			false
+char			'\u0000'
+reference type		null
+
+class A{
+	final void test()
+	{
+	}
+}
+
+class B extends A{
+	void test() //not allowed
+	{
+	}
+}
+
+
+final class C{
+}
+
+class D extends C{ //not allowed
+}
+
+The final and abstract keywords can't be used together.
+
+inner classes:
+
+A class defined within another class is called an inner class.
+
+1. non static inner class
+class A{
+	class B{
+	}
+}
+
+2. static inner class
+
+class A{
+	static class B{
+	}
+}
+
+3. Local class (class defined within a method)
+
+class A{
+	void test()
+	{
+	class B{
+	}
+
+	B b1=new B();
+	.....
+	}
+}
+
+4. Anonymous class (class without a name)
+It is very commonly used with abstract classes and interfaces.
+
+
+Interfaces:
+
+Interfaces are similar to abstract classes except that all the methods of the interface are abstract.
+
+Interfaces are indirectly used to support multiple inheritance.
+
+ie A class can implement multiple interfaces.
+
+
+
+All the methods defined within an interface are public.
+All the variables declared within an interface are public,static and final.
+
+
+A class can extend another class and implement multiple interfaces.
+
+interface I1{
+}
+
+interface I2{
+}
+
+class A{
+}
+
+class B extends A implements I1,I2{
+}
+
+
+Generics:
+
+Generics enables programmers to specify , with a single method declaration, a set of related methods or
+with a single class declaration, a set of related types respectively.
+
+
+class Pair{
+	private int first;
+	private int second;
+
+	Pair(int first,int second){
+		this.first=first;
+		this.second=second;
+	}
+
+	......
+}
+
+class PairString{
+	private String first;
+	private String second;
+
+	Pair(String first,String second){
+		this.first=first;
+		this.second=second;
+	}
+
+	......
+}
+
+
+class Pair<T1,T2>{
+	private T1 first;
+	private	T2 second;
+
+	Pair(T1 first,T2 second)
+	{
+	this.first=first;
+	this.second=second;
+	}
+	................
+
+}
+
+Pair<String,Integer> p=new Pair<>("hello",1244);
+Pair<Person,Employee> p1=new Pair<>(new Person(......),new Employee(.....));
+
+There is a class type available for each primitive type. They are called wrapper classes.
+
+byte-------Byte
+short------Short
+int--------Integer
+long-------Long
+float------Float
+double-----Double
+char-------Character
+boolean----Boolean
+
+Array:
+Arrays are considered as objects in java.
+They are created with new operator.
+
+int[] x; //x is an int array
+int x[]; //x is an int array
+
+int[] x,y;//both x and y are int arrays.
+int x[],y;//x is an int array and y is an int.
+
+x=new int[10];//dynamically allocates memory for 10 int elements and initializes them to 0.
+
+
+
+int[] a={23,11,67};
+
+This single statement is equivalent to the following 5 statements.
+
+int[] a;
+a=new int[3];
+a[0]=23;
+a[1]=11;
+a[2]=67;
+
+
+Employee[] arr={new Employee(101,"Arvind","Developer"),new Employee(102,"Rakesh","Accountant")}
+
+This single statement is equivalent to the following 4 statements.
+
+Employee[] arr;
+arr=new Employee[2];
+arr[0]=new Employee(101,"Arvind","Developer");
+arr[1]=new Employee(102,"Rakesh","Accountant");
+
+Exception Handling:
+
+Checked Exceptions:
+	All the subclasses of Exception class except RuntimeException are called Checked /Compile Time
+Exceptions. The compiler will show an error message if these exceptions are not handled.
+
+Unchecked Exceptions:
+	The RuntimeException and its subclasses are called unchecked exceptions.
+They are not detected by the compiler. They are identified only during runtime.
+
+try{
+	statement(s) which may throw exceptions
+}
+catch(ExceptionType e){
+	statement(s) to be invoked if this exception is thrown
+}finally{
+	clean up code.
+	statement(s) to be invoked irrespective of an exception is thrown or not
+}
+
+
+
+
+
+	

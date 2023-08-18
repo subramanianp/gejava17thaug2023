@@ -1,0 +1,581 @@
+https://drive.google.com/drive/folders/12b3u2CI5nbTxQFAzQNawIFnzxGBEGzIh?usp=sharing
+
+https://github.com/subramanianp/gejava17thaug2023.git
+
+   package com.ge.training.oops;
+
+class A{
+    final int k;
+    
+      A(int k) {
+          this.k=k; 
+      }
+     
+}
+
+class B{
+    private int a;
+    private double b;
+    private boolean c;
+    private char d;
+    private String e;
+    @Override
+    public String toString() {
+        return "B [a=" + a + ", b=" + b + ", c=" + c + ", d=" + d + ", e=" + e + "]";
+    }
+    
+}
+
+public class FinalTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        final int a;
+        a=10;
+        //a=11;
+        B b1=new B();
+        System.out.println(b1);
+
+    }
+
+}
+
+package com.ge.training.oops;
+class Sample{
+    public static final int DISCOUNT_RATE=12;
+}
+
+public class FinalTest2 {
+public static void main(String[] args) {
+        public static final int DISCOUNT_RATE=12;
+}
+
+}
+
+
+package com.ge.training.innerclasses;
+
+class R{
+    void method1()
+    {
+        System.out.println("method1 of R");
+    }
+}
+
+class A{
+    void test() {
+        System.out.println("method of A");
+    }
+    class B extends R{ //non static inner class of A
+        void test() {
+            System.out.println("method of B");
+            method1();
+            A.this.test();
+        }
+    }
+}
+public class NonStaticInnerTest {
+public static void main(String[] args) {
+    A a=new A();
+    A.B b=a.new B();
+    a.test();
+    b.test();
+}
+}
+
+
+package com.ge.training.innerclasses;
+
+class C{
+    static int i=10;
+    
+    static class D{
+        void test()
+        {
+            System.out.println("method of D");
+            System.out.println(i);
+        }
+    }
+    
+}
+
+public class StaticInnerTest {
+public static void main(String[] args) {
+    C.D d=new C.D();
+    d.test();
+}
+}
+
+package com.ge.training.innerclasses;
+
+class X{
+    void sample()
+    {
+        int p=20;
+        class Y{
+            int i=10;
+            void print()
+            {
+                System.out.println(p);
+            }
+        }
+        Y y1=new Y();
+        System.out.println(y1.i);
+        y1.print();
+    }
+}
+
+public class LocalClassTest {
+public static void main(String[] args) {
+    X x1=new X();
+    x1.sample();
+}
+}
+
+
+
+package com.ge.training.innerclasses;
+
+abstract class F{
+    abstract String getMessage(String name);
+    void printMessage(String name)
+    {
+        System.out.println("Message:"+getMessage(name));
+    }
+}
+
+public class AnonymousClassTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+            F f=new F() {//starting of subclass of F
+                    /*
+                            Extending the class F
+                            overriding getMessage() method
+                            Creating the object for the subclass of F
+                    */
+                @Override
+                String getMessage(String name) {
+                    // TODO Auto-generated method stub
+                    return "Welcome "+name;
+                }
+                
+            };//ending of subclass of F
+            f.printMessage("Arvind");
+            
+    }
+
+}
+
+
+package com.ge.training.interfaces;
+
+interface Flyer{
+    void fly();
+}
+interface Feedable{
+    void eat();
+}
+
+class Aeroplane implements Flyer{
+
+    @Override
+    public void fly() {
+        // TODO Auto-generated method stub
+        System.out.println("Aeroplane Flying");
+    }
+    
+}
+class Bird implements Flyer,Feedable{
+
+    @Override
+    public void eat() {
+        // TODO Auto-generated method stub
+        System.out.println("Bird eating");
+    }
+
+    @Override
+    public void fly() {
+        // TODO Auto-generated method stub
+        System.out.println("Bird flying");
+    }
+    
+}
+
+public class InterfaceTest {
+public static void main(String[] args) {
+    Flyer f=new Bird();
+    f.fly();
+    Feedable feedable=(Feedable)f;
+    feedable.eat();
+    
+    System.out.println(f instanceof Flyer);
+    System.out.println(f instanceof Feedable);
+    Flyer f1=new Aeroplane();
+    System.out.println(f1 instanceof Flyer);
+    System.out.println(f1 instanceof Feedable);
+}
+}
+
+
+interface A{
+    void method1();
+    default void method2() {
+        
+    }
+    static void method3() {
+        
+    }
+}
+
+
+package com.ge.training.interfaces;
+
+interface Flyer{
+    void fly();
+}
+interface Feedable{
+    void eat();
+}
+interface A{
+    void method1();
+    default void method2() {
+        System.out.println("non static method method2");
+    }
+    static void method3() {
+        System.out.println("static method method3");
+    }
+}
+class B implements A{
+
+    @Override
+    public void method1() {
+        // TODO Auto-generated method stub
+        System.out.println("method1");
+    }
+    
+}
+class Aeroplane implements Flyer{
+
+    @Override
+    public void fly() {
+        // TODO Auto-generated method stub
+        System.out.println("Aeroplane Flying");
+    }
+    
+}
+class Bird implements Flyer,Feedable{
+
+    @Override
+    public void eat() {
+        // TODO Auto-generated method stub
+        System.out.println("Bird eating");
+    }
+
+    @Override
+    public void fly() {
+        // TODO Auto-generated method stub
+        System.out.println("Bird flying");
+    }
+    
+}
+interface I{
+    String ANIMAL_TYPE="HERBIVOROUS";
+}
+
+public class InterfaceTest {
+public static void main(String[] args) {
+    Flyer f=new Bird();
+    f.fly();
+    Feedable feedable=(Feedable)f;
+    feedable.eat();
+    
+    System.out.println(f instanceof Flyer);
+    System.out.println(f instanceof Feedable);
+    Flyer f1=new Aeroplane();
+    System.out.println(f1 instanceof Flyer);
+    System.out.println(f1 instanceof Feedable);
+    A a=new B();
+    a.method1();
+    a.method2();
+    A.method3();
+    System.out.println(I.ANIMAL_TYPE);
+}
+}
+
+
+package com.ge.training.generics;
+
+public class Pair<T>{
+    private T first;
+    private T second;
+
+    
+}
+
+
+
+package com.ge.training.generics;
+
+class A{
+    private int i;
+
+    public A(int i) {
+        super();
+        this.i = i;
+    }
+
+    @Override
+    public String toString() {
+        return "A [i=" + i + "]";
+    }
+    
+    
+}
+
+public class GenericTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Pair<Integer> p1=new Pair<Integer>(10, 20);
+        Pair<String> p2=new Pair<>("hello", "world");
+        Pair<A> p3=new Pair<>(new A(20), new A(30));
+        
+        System.out.println(p1);
+        System.out.println(p2);
+        System.out.println(p3);
+        
+
+    }
+
+}
+
+
+package com.ge.training.generics;
+
+class Sample{
+    static <T> void display(T element)
+    {
+        System.out.println(element.getClass().getName()+"----"+element);
+    }
+}
+
+public class GenericTest2 {
+public static void main(String[] args) {
+    A a=new A(10);
+    String b="hello";
+    int c=12;
+    
+    Sample.display(a);
+    Sample.display(b);
+    Sample.display(c);
+}
+}
+
+
+package com.ge.training.arrays;
+class A{
+    private int i;
+
+    public A(int i) {
+        super();
+        this.i = i;
+    }
+
+    @Override
+    public String toString() {
+        return "A [i=" + i + "]";
+    }
+    
+    
+}
+
+public class ArrayTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        int[] arr1=new int[3];
+        arr1[0]=12;
+        arr1[1]=3;
+        arr1[2]=30;
+        for(int i=0;i<arr1.length;i++) {
+            System.out.println(arr1[i]);
+        }
+        System.out.println("using enhanced for loop");
+        for(int x:arr1) {
+            System.out.println(x);
+        }
+        A[] arr2=new A[4];
+        for(int i=0;i<arr2.length;i++) {
+            arr2[i]=new A(10+i);
+        }
+        for(A a:arr2) {
+            System.out.println(a);
+        }
+
+    }
+
+}
+
+
+package com.ge.training.arrays;
+
+public class ArrayTest2 {
+public static void main(String[] args) {
+    int[][] a= {//2 dimensional array is a collection of one dimensional arrays
+            {3,2,10},
+            {12,4},
+            {3,5,1,20}
+    };
+    for(int i=0;i<a.length;i++) {
+        System.out.println();
+        for(int j=0;j<a[i].length;j++) {
+            System.out.print(a[i][j]+"\t");
+        }
+    }
+    System.out.println();
+    System.out.println("using enhanced for loop");
+    for(int[] x:a) {
+        System.out.println();
+        for(int y:x) {
+            System.out.print(y+"\t");
+        }
+    }
+}
+}
+
+package com.ge.training.exceptions;
+
+public class ExceptionTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        int x=10;
+        System.out.println("before dividing ");
+        try {
+        System.out.println(x/0);
+        }catch(ArithmeticException e) {
+            System.out.println("Divide by zero error");
+            return;
+        }finally {
+            System.out.println("within finally");
+        }
+        System.out.println("after dividing by zero");
+    }
+
+}
+
+
+package com.ge.training.exceptions;
+
+public class ExceptionTest2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        
+        
+        try {
+            int x=Integer.parseInt(args[0]);
+            int y=Integer.parseInt(args[1]);
+            System.out.println(x/y);
+        }catch(ArithmeticException e) {
+            System.out.println("Divide by zero error");
+            
+        }catch(ArrayIndexOutOfBoundsException e) {
+            System.out.println("insufficient arguments");
+        }catch(NumberFormatException e) {
+            System.out.println("number not in proper format");
+        }
+        finally {
+            System.out.println("within finally");
+        }
+        System.out.println("after dividing by zero");
+    }
+
+}
+
+
+C:\>java -classpath C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\FourthPrj\bin com.ge.training.exceptions.ExceptionTest2 10 2
+5
+within finally
+after dividing by zero
+
+C:\>java -classpath C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\FourthPrj\bin com.ge.training.exceptions.ExceptionTest2 10 0
+Divide by zero error
+within finally
+after dividing by zero
+
+C:\>java -classpath C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\FourthPrj\bin com.ge.training.exceptions.ExceptionTest2 10
+insufficient arguments
+within finally
+after dividing by zero
+
+C:\>java -classpath C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\FourthPrj\bin com.ge.training.exceptions.ExceptionTest2 10 rrr
+
+
+package com.ge.training.exceptions;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class ExceptionTest3 {
+    
+    public static void main(String[] args) {
+        FileInputStream fin=null;
+        try {
+             fin=new FileInputStream("c:/test/test.txt");
+             byte[] arr=new byte[2048];
+             fin.read(arr);
+             System.out.println(new String(arr));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
+
+}
+
+package com.ge.training.exceptions;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class ExceptionTest3 {
+    
+    public static void main(String[] args) {
+        FileInputStream fin=null;
+        try {
+             fin=new FileInputStream("c:/test/test.txt");
+             byte[] arr=new byte[2048];
+             fin.read(arr);
+             System.out.println(new String(arr));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally {
+            if(fin!=null) {
+                try {
+                    fin.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+    }
+
+}
+
+
+
+

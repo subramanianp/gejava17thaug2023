@@ -296,11 +296,19 @@ Concrete classes can be instantiated.
 
 The subclass of an abstract should implement all the abstract methods of the super class.
 
+package pack1;
+public class A{
+}
 
+package pack2;
+//import pack1.A;
+class A{
+}
+class B extends pack1.A{
+}
 
+class C extends B{
 
-
-
-
+}
 
 
