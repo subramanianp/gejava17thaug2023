@@ -1,0 +1,190 @@
+throws:
+
+throws declaration delegates the responsibility of handling the exception to the caller of the method.
+
+throws statement informs the compiler that it is aware of the exception being thrown but does not 
+want to handle it.
+
+
+User Defined Exceptions:
+
+Classes which extend from Exception/RuntimeException class.
+
+If it extends from Exception class, it becomes a checked exception and if it extends from RuntimeException,
+it becomes an unchecked exception.
+
+
+throw: The throw statement is used to explicitly throw an exception.
+
+
+try-with-resources:
+
+A resource is an object which has implemented an interface called AutoCloseable.
+
+interface AutoCloseable{
+void close();
+}
+
+These resources need not be explicitly closed in the finally block.
+Once the scope of try block is over, the jvm automatically closes it.
+
+
+Functional Programming:
+
+1. Function should be passed as an argument to another function.
+2. Function should return another function
+3. Support for anonymous functions.
+
+Functional Interface:
+
+Functional interface is an interface which has only one abstract method.
+Wherever a functional interface should be passed as an argument , the implementation for the only abstract
+method can be passed.
+
+@FunctionalInterface
+interface I{
+	String getMessage(String name);
+	
+}
+
+The @FunctionalInterface throws a compilation error, if there is more than abstract method defined within 
+the interface.
+
+//prior to java 8
+I i=new I(){
+	String getMessage(String name){
+		return "Welcome "+name;
+	}
+};
+
+
+from java 8
+
+I i=n->{
+String s="Welcome "+name;
+return s;
+}
+or
+
+I i=n->"Welcome "+name;
+
+In the lambda expression, anything left to -> is the parameter and right to the -> is the method body.
+If there is a single statement within the method body, brace and return statement is not mandatory.
+
+
+If a function returns a functional interface, it is equivalent to function returning a function.
+
+
+If a function accepts a functional interface as an argument and returns another functional interface , it
+is equivalent to a function accepting a function as argument and returning another function.
+
+
+
+
+interface I{
+	void test(String s);
+}
+
+
+class P{
+	static void doSomething(String a)
+	{
+	System.out.println("doing something with "+a);
+	}
+}
+
+I i=P::doSomething;//legal
+
+P::doSomething is called the method reference.
+
+Constructor Reference:
+
+A constructor can be created using the class name and the new operator.
+
+A constructor reference can be assigned to any functional interface reference that defines a method which
+is compatible with the constructor.
+
+
+interface CustomerFactory1{
+	Customer createCustomer();
+}
+
+interface CustomerFactory2{
+	Customer createCustomer(int a);
+}
+
+
+class Customer{
+	Customer(){
+	}
+
+	Customer(int x){
+	}
+}
+
+
+CustomerFactory1 factory1=Customer::new;//constructor reference
+CustomerFactory2 factory2=Customer::new;
+
+
+Customer c1=factory1.createCustomer();
+Customer c2=factory2.createCustomer(20);
+
+
+class System{
+	public static PrintStream out;
+}
+
+class PrintStream{
+	void println(Object o);
+}
+
+interface Consumer<T>{
+	void accept(T t);
+}
+
+Consumer c=System.out::println;
+
+
+Collections:
+
+List------------Ordered collection. Allows Duplicates.
+Guarantees that the first added element is the first element.
+
+
+Set:
+
+Unordered collection.
+Does not allow duplicates.
+
+It internally uses hashCode() and equals() methods to find out the duplicates.
+
+The hashCode() and equals() methods are defined in Object() class.
+
+
+hashCode() returns a unique value for each object.
+To make a confirmation, whether it is a duplicate the equals() method is used.
+
+ie if the hashCode() value of 2 objects are equal, the jvm uses equals() method to confirm it.
+
+
+
+interface Comparable<T>{
+	int compareTo(T t);
+}
+
+Based on the compareTo method's return value, the elements are arranged.
+
+<0---------The current element will be before t.
+>0---------The current will element will move after t.
+=0---------It will be assumed duplicate and will not be added.
+
+For SortedSet, the hashCode() and equals() methods are not invoked.
+
+
+
+
+
+
+
+
