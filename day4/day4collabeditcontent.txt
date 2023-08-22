@@ -1,0 +1,699 @@
+https://drive.google.com/drive/folders/12b3u2CI5nbTxQFAzQNawIFnzxGBEGzIh?usp=sharing
+
+https://github.com/subramanianp/gejava17thaug2023.git
+
+  package com.ge.training.exceptions;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+public class ThrowsTest {
+public static void main(String[] args) {
+    
+    System.out.println("Going to wait for 5 secs");
+    try {
+        delay(5000);
+    } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    System.out.println("After 5 secs");
+    try {
+        createFileAndDelay("c:/test/next.txt");
+    } catch (FileNotFoundException | InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    
+}
+
+static void delay(long millisecs) throws InterruptedException
+{
+    
+    Thread.sleep(millisecs);
+    
+}
+
+static void createFileAndDelay(String fileName) throws FileNotFoundException, InterruptedException
+{
+    FileOutputStream fout=new FileOutputStream(fileName);
+    Thread.sleep(1000);
+}
+}
+
+
+package com.ge.training.exceptions;
+
+
+class NegativeNumberException extends Exception{
+
+    public NegativeNumberException(String message) {
+        super(message);
+        // TODO Auto-generated constructor stub
+    }
+    
+}
+
+public class ThrowTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        int n=Integer.parseInt(args[0]);
+        try {
+            double squareRoot=findSquareRoot(n);
+            System.out.println("Square root: "+squareRoot);
+        } catch (NegativeNumberException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+
+    }
+
+    private static double findSquareRoot(int n) throws NegativeNumberException {
+        // TODO Auto-generated method stub
+        if(n<0) {
+            throw new NegativeNumberException("Invalid number "+n);
+        }
+        return Math.sqrt(n);
+    }
+
+}
+
+
+
+package com.ge.training.exceptions;
+
+public class MyResource  implements AutoCloseable{
+    private int i;
+
+    public MyResource(int i) {
+        super();
+        this.i = i;
+    }
+
+    @Override
+    public void close() throws Exception {
+        // TODO Auto-generated method stub
+        System.out.println("closing myresource");
+        i=0;
+    }
+    
+    public void test()
+    {
+        System.out.println("testing myresource with value: "+i);
+    }
+
+}
+
+
+package com.ge.training.exceptions;
+
+public class TryWithResourcesTest1 {
+    public static void main(String[] args) {
+        try(MyResource resource=new MyResource(10)){
+            System.out.println("using resource");
+            resource.test();
+            
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("completing main method");
+    }
+
+}
+
+
+package com.ge.training.exceptions;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class FileOpenTest {
+    public static void main(String[] args) {
+        try(FileInputStream fin=new FileInputStream("c:/test/test.txt")){
+            byte[] b=new byte[2048];
+            fin.read(b);
+            System.out.println(new String(b));
+            
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+}
+
+
+package com.ge.training.exceptions;
+
+public class TryWithResourcesTest2 {
+    public static void main(String[] args) {
+        try(MyResource resource1=new MyResource(10);MyResource resource2=new MyResource(15)){
+            System.out.println("using resource");
+            resource1.test();
+            resource2.test();
+            
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("completing main method");
+    }
+
+}
+
+package com.ge.training.functional;
+interface I{
+    String getMessage(String name);
+}
+interface J{
+    int calculate(int a,int b);
+}
+
+public class LambdaTest1 {
+public static void main(String[] args) {
+    I i1=n->{
+        System.out.println("Within lambda");
+        return "Welcome "+n;
+    };
+    System.out.println(i1.getMessage("Arun"));
+    J j1=(x,y)->x+y;
+    System.out.println(j1.calculate(10, 8));
+    test((a,b)->a*a+b*b,2,3);
+}
+static void test(J j,int x,int y)
+{
+    System.out.println(j.calculate(x,y));
+}
+
+}
+
+
+
+
+package com.ge.training.functional;
+
+@FunctionalInterface
+interface D{
+    String message(String name);
+    default void test()
+    {
+        System.out.println("test method of D");
+    }
+    default void next() {
+        System.out.println("next method of D");
+    }
+}
+
+public class LambdaTest2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        display(s->"Good morning ", "Arvind");
+
+    }
+    
+    static void display(D d,String name)
+    {
+        System.out.println(d.message(name));
+        d.test();
+        d.next();
+    }
+
+}
+
+
+package com.ge.training.functional;
+
+@FunctionalInterface
+interface K{
+    int calc(int a);
+}
+
+public class LambdaTest3 {
+public static void main(String[] args) {
+    K k=getData();
+    System.out.println(k.calc(5));
+}
+
+static K getData() {//function returning another function
+    System.out.println("within getData");
+    return x->x*x;
+}
+}
+package com.ge.training.functional;
+@FunctionalInterface
+interface I1{
+    int calculate(int i,int j);
+}
+
+@FunctionalInterface
+interface I2{
+    String displayFormat(int p,int q);
+}
+
+public class LambdaTest4 {
+public static void main(String[] args) {
+        I2 i2=performComputation((a,b)->a*b);
+        System.out.println(i2.displayFormat(10, 20));
+}
+
+
+static I2 performComputation(I1 i1)
+{
+    return (r1,r2)->"Computated value: "+i1.calculate(r1, r2);
+}
+
+}
+
+package com.ge.training.functional;
+interface F{
+    void test(String s);
+}
+
+
+class P{
+    static void doSomething(String a)
+    {
+    System.out.println("doing something with "+a);
+    }
+}
+
+class Q{
+    void testing(String k)
+    {
+        System.out.println("testing with k");
+    }
+}
+
+public class MethodReference1 {
+public static void main(String[] args) {
+    F f=P::doSomething;
+    f.test("hello, world");
+    Q q=new Q();
+    f=q::testing;
+    f.test("scala");
+}
+}
+
+package com.ge.training.functional;
+
+class Employee{
+    private int id;
+    private String name;
+    private String designation;
+    private double salary;
+    public Employee(int id, String name, String designation, double salary) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.designation = designation;
+        this.salary = salary;
+    }
+    public Employee(int id) {
+        super();
+        this.id = id;
+    }
+    public Employee(int id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
+    }
+    public Employee(int id, String name, String designation) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.designation = designation;
+    }
+    @Override
+    public String toString() {
+        return "Employee [id=" + id + ", name=" + name + ", designation=" + designation + ", salary=" + salary + "]";
+    }
+    
+}
+
+
+@FunctionalInterface
+interface EmployeeFactory1{
+    Employee createEmployee(int id);
+}
+@FunctionalInterface
+interface EmployeeFactory2{
+    Employee createEmployee(int id,String name);
+}
+
+@FunctionalInterface
+interface EmployeeFactory3{
+    Employee createEmployee(int id,String name,String designation);
+}
+
+@FunctionalInterface
+interface EmployeeFactory4{
+    Employee createEmployee(int id,String name,String designation,double salary);
+}
+
+
+public class ConstructorReferenceTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        EmployeeFactory1 factory1=Employee::new;
+        EmployeeFactory2 factory2=Employee::new;
+        EmployeeFactory3 factory3=Employee::new;
+        EmployeeFactory4 factory4=Employee::new;
+        
+        
+        Employee emp1=factory1.createEmployee(1001);
+        Employee emp2=factory2.createEmployee(1002,"Surya");
+        Employee emp3=factory3.createEmployee(1003,"Ramesh","Accountant");
+        Employee emp4=factory4.createEmployee(1004,"Ajay","Developer",60000);
+        
+        System.out.println(emp1);
+        System.out.println(emp2);
+        System.out.println(emp3);
+        System.out.println(emp4);
+        
+
+    }
+
+}
+
+
+package com.ge.training.collections;
+interface I{
+    void method1();
+}
+interface J extends I{
+    void method2();
+}
+class X implements J{
+
+    @Override
+    public void method1() {
+        // TODO Auto-generated method stub
+        System.out.println("method1");
+    }
+
+    @Override
+    public void method2() {
+        // TODO Auto-generated method stub
+        System.out.println("method2");
+    }
+    
+}
+
+public class InterfaceTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        I i=new X();
+        i.method1();
+        J j=(J)i;
+        j.method2();
+    }
+
+}
+
+
+
+package com.ge.training.collections;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+public class ListTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        List<String> list=new ArrayList<>();
+        list.add("apple");
+        list.add("orange");
+        list.add("pine apple");
+        System.out.println(list);
+        
+        System.out.println("using enhanced for loop");
+        for(String s:list) {
+            System.out.println(s);
+        }
+        
+        System.out.println("using foreach lambda");
+        list.forEach(elt->System.out.println(elt));
+        
+        System.out.println("using foreach method ref");
+        list.forEach(System.out::println);
+        Consumer<String> consumer=System.out::println;
+        list.forEach(consumer);
+        
+        consumer=e->System.out.println(e);
+        list.forEach(consumer);
+        
+        List<Object> list1=new ArrayList<>();
+        list1.add(11);
+        list1.add(21.55);
+        list1.add("hello");
+        System.out.println(list1);
+        
+        
+
+    }
+
+}
+
+
+
+package com.ge.training.collections;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class SetTest1 {
+public static void main(String[] args) {
+    Set<Integer> set1=new HashSet<>();
+    set1.add(12);
+    set1.add(56);
+    set1.add(12);
+    set1.add(56);
+    set1.add(22);
+    System.out.println(set1);
+    
+}
+}
+
+package com.ge.training.collections;
+
+public class Employee{
+    private int id;
+    private String name;
+    private String designation;
+    private double salary;
+    public Employee(int id, String name, String designation, double salary) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.designation = designation;
+        this.salary = salary;
+    }
+        @Override
+    public String toString() {
+        return "Employee [id=" + id + ", name=" + name + ", designation=" + designation + ", salary=" + salary + "]";
+    }
+    
+}
+
+
+package com.ge.training.collections;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class SetTest2 {
+public static void main(String[] args) {
+    Set<Employee> set=new HashSet<>();
+    set.add(new Employee(1001, "Deva", "Developer", 30000));
+    set.add(new Employee(1002, "Raghav", "Acccountant", 25000));
+    set.add(new Employee(1001, "Deva", "Developer", 30000));
+    set.add(new Employee(1005, "Surya", "Architect", 80000));
+    set.add(new Employee(1001, "Deva", "Developer", 30000));
+    set.add(new Employee(1002, "Raghav", "Acccountant", 25000));
+    set.forEach(System.out::println);
+}
+}
+
+
+package com.ge.training.collections;
+
+public class Employee{
+    private int id;
+    private String name;
+    private String designation;
+    private double salary;
+    public Employee(int id, String name, String designation, double salary) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.designation = designation;
+        this.salary = salary;
+    }
+        @Override
+    public String toString() {
+        return "Employee [id=" + id + ", name=" + name + ", designation=" + designation + ", salary=" + salary + "]";
+    }
+        @Override
+        public boolean equals(Object obj) {
+            // TODO Auto-generated method stub
+            
+            boolean equals=false;
+            Employee e1=(Employee)obj;
+            System.out.println("invoking equals of "+id);
+            if(id==e1.id&&name.equals(e1.name)&&designation.equals(e1.designation)) {
+                equals=true;
+            }
+            return equals;
+        }
+        @Override
+        public int hashCode() {
+            // TODO Auto-generated method stub
+            System.out.println("invoking hashCode of "+id);
+            return id;
+        }
+        
+        
+    
+}
+
+
+
+package com.ge.training.collections;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+public class SortedSetTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        SortedSet<String> set=new TreeSet<>();
+        set.add("mango");
+        set.add("grape");
+        set.add("mango");
+        set.add("apple");
+        set.add("mango");
+        System.out.println(set);
+        
+        SortedSet<Integer> set1=new TreeSet<>();
+        set1.add(23);
+        set1.add(10);
+        set1.add(12);
+        set1.add(51);
+        set1.add(31);
+        System.out.println(set1);
+        
+
+    }
+
+}
+
+package com.ge.training.collections;
+
+public class Customer implements Comparable<Customer> {
+    private int id;
+    private String name;
+    private String email;
+    public Customer(int id, String name, String email) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    @Override
+    public String toString() {
+        return "Customer [id=" + id + ", name=" + name + ", email=" + email + "]";
+    }
+    @Override
+    public int compareTo(Customer c) {
+        // TODO Auto-generated method stub
+        System.out.println("invoking compareTo of customer with id "+id);
+        int comp=0;
+        if(id<c.id) {
+            comp=-1;
+        }
+        else if(id>c.id) {
+            comp=1;
+        }
+        return comp;
+    }
+    
+    
+
+}
+
+
+package com.ge.training.collections;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+public class SortedSetTest2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        SortedSet<Customer> set=new TreeSet<>();
+        set.add(new Customer(1011, "Aman", "aman@gmail.com"));
+        set.add(new Customer(1001, "Surya", "surya@gmail.com"));
+        set.add(new Customer(1005, "Rajiv", "rajiv@gmail.com"));
+        set.add(new Customer(1002, "Priya", "priya@gmail.com"));
+        set.add(new Customer(1005, "Rajiv", "rajiv@gmail.com"));
+        set.add(new Customer(1002, "Priya", "priya@gmail.com"));
+        
+        System.out.println(set);
+        
+        
+
+    }
+
+}
+
+
+
+
+
+
