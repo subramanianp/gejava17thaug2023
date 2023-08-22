@@ -1,0 +1,144 @@
+Comparator:
+
+This interface is used to modify the sorting logic used by TreeSet.
+
+interface Comparator<T>{
+	int compare(T t1,T t2);
+}
+
+Comparator can be used if you don't want to use the default comparison logic provided by 
+Comparable or if you want to add the non Comparable objects to a treeset.
+
+Map:-------------collection of key value pairs. Keys should be unique.
+
+
+HashMap--------------non thread safe implementation of Map
+Hashtable------------thread safe implementation of Map
+Properties-----------both keys and values are in string format.
+
+java -Dsystem_property_key=system_property_value   className  command_line_arguments
+
+
+
+
+Multi-threading:
+
+Thread is part of a program.
+When multiple parts of the same program run concurrently, it is called multi threading.
+
+1. implementing Runnable interface
+2. extending Thread class
+
+
+interface Runnable{
+	public void run();
+}
+
+class Thread implements Runnable{
+..
+..
+..
+}
+
+Life Cycle of Thread:
+
+1. Runnable state
+2. Running state
+3. Blocked state
+4. Dead state
+
+Runnable state:
+
+When the start() method is invoked on a thread, it moves to the thread pool.
+When the thread is in thread pool, at any point of time it can be run by the cpu.
+This state is called Runnable state. All the threads in the thread pool are said to be in Runnable state.
+
+Running state:
+
+When a thread is run by the cpu, it is said to be in Running state.
+At any point of time , only one thread can be in running state and any number of threads can be in runnable
+state.
+
+A thread can switch between running and runnable states, any number of times.
+
+	   <-------------------|
+thread pool------------------->cpu
+runnable			running
+
+blocked state:
+When a running thread invokes methods like sleep() or join() or wait(), it moves from running to blocked state.
+After a thread is unblocked, it moves from blocked to runnable state.
+A thread can never move from blocked to running state directly.
+
+Minimum and Maximum heap space:
+
+Minimum heap size--------1/16th of total ram size
+Maximum heap size---------1/4th of total ram size
+
+
+join():
+
+The join method makes the invoking thread to wait till the invoked thread is completed.
+
+
+
+synchronization:
+
+When multiple threads share a common object, making the object to be accessible only one thread at a time
+is called synchronization.
+
+This is achieved with synchronized method and block.
+
+The synchronized method locks the current object for other threads when it is already accessed by
+one thread.
+Only one thread can access synchronized method at a  single point of time.
+
+Synchronized block locks a part of the method for other threads.
+
+
+
+synchronized(object_to_be_locked){
+	....
+}
+
+possibility 1:
+A
+B
+C
+A
+B
+C
+
+possibility 2:
+A
+B
+A
+C
+B
+C
+
+
+wait and notify:
+
+when a thread(t1) invokes wait method on an object(obj), it moves from running to blocked state.
+A thread can invoke wait method on object obj only when obj is in synchronized state(locked).
+When t1 invokes wait method on obj, it releases the lock on obj and goes to blocked state.
+So after t1 invokes wait() on obj, the lock on obj is released so that other threads can acquire lock on obj.
+
+On the same object obj, if some other thread(t2) invokes notify() method, the thread(t1) which has already
+invoked wait on the same object(obj) gets unblocked.
+
+The producer consumer problem is implemented in java with wait() and notify() mechanism.
+
+Only after the producer thread produces the object, the consumer thread should consume it.
+Only after the consumer thread consumes the object, the producer thread should produce the next object.
+
+
+When multiple threads invoke wait on the same object, the notify() method will unblock only one of the
+threads.
+
+To unblock all the threads, notifyAll() method should be invoked.
+
+
+
+

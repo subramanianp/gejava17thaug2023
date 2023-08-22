@@ -1,0 +1,611 @@
+https://drive.google.com/drive/folders/12b3u2CI5nbTxQFAzQNawIFnzxGBEGzIh?usp=sharing
+
+https://github.com/subramanianp/gejava17thaug2023.git
+
+package com.ge.training.collections;
+
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+class StringComparator implements Comparator<String>{
+
+    @Override
+    public int compare(String s1, String s2) {
+        // TODO Auto-generated method stub
+        return s2.compareTo(s1);
+    }
+    
+}
+
+public class SortedSetTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        SortedSet<String> set=new TreeSet<>(new StringComparator());
+        set.add("mango");
+        set.add("grape");
+        set.add("mango");
+        set.add("apple");
+        set.add("mango");
+        System.out.println(set);
+        
+        SortedSet<Integer> set1=new TreeSet<>((i1,i2)->i2.compareTo(i1));
+        set1.add(23);
+        set1.add(10);
+        set1.add(12);
+        set1.add(51);
+        set1.add(31);
+        System.out.println(set1);
+        
+
+    }
+
+}
+
+
+
+package com.ge.training.collections;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+public class SortedSetTest2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        SortedSet<Customer> set=new TreeSet<>((c1,c2)->c1.getName().compareTo(c2.getName()));
+        set.add(new Customer(1011, "Aman", "aman@gmail.com"));
+        set.add(new Customer(1001, "Surya", "surya@gmail.com"));
+        set.add(new Customer(1005, "Rajiv", "rajiv@gmail.com"));
+        set.add(new Customer(1002, "Priya", "priya@gmail.com"));
+        set.add(new Customer(1005, "Rajiv", "rajiv@gmail.com"));
+        set.add(new Customer(1002, "Priya", "priya@gmail.com"));
+        
+        System.out.println(set);
+        
+        
+
+    }
+
+}
+
+
+package com.ge.training.collections;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class MapTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Map<Integer, Customer> map=new HashMap<>();
+        map.put(1001, new Customer(1001, "Rajiv", "rajiv@yahoo.com"));
+        map.put(1002, new Customer(1002, "Deva", "deva@gmail.com"));
+        map.put(1003, new Customer(1003, "Amar", "amar@yahoo.com"));
+        
+        Customer c=map.get(1002);
+        System.out.println(c.getName()+"\t"+c.getEmail());
+        
+        Set<Integer> set=map.keySet();
+        }
+
+
+
+        set.forEach(key->System.out.println(key+"\t"+map.get(key)));
+        
+
+    }
+
+
+
+        
+        package com.ge.training.collections;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class MapTest2 {
+public static void main(String[] args) {
+    Properties props=new Properties();
+    props.put("Karnataka", "Bangalore");
+    props.put("Maharashtra", "Mumbai");
+    props.put("Tamil Nadu","Chennai");
+    
+    try(FileOutputStream fout=new FileOutputStream("state.properties")){
+        props.store(fout, "---testing properties collection--------");
+        
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    System.out.println("properties written to the file");
+}
+}
+
+
+package com.ge.training.collections;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class MapTest3 {
+public static void main(String[] args) {
+    Properties props=new Properties();
+    
+    
+    try(FileInputStream fin=new FileInputStream("state.properties")){
+        props.load(fin);
+        System.out.println("Capital of Karnataka: "+props.get("Karnataka"));
+        
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    
+}
+}
+
+
+
+package com.ge.training.collections;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class MapTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Map<Integer, Customer> map=new HashMap<>();
+        map.put(1001, new Customer(1001, "Rajiv", "rajiv@yahoo.com"));
+        map.put(1002, new Customer(1002, "Deva", "deva@gmail.com"));
+        map.put(1003, new Customer(1003, "Amar", "amar@yahoo.com"));
+        
+        Customer c=map.get(1002);
+        System.out.println(c.getName()+"\t"+c.getEmail());
+        
+        Set<Integer> set=map.keySet();
+        set.forEach(key->System.out.println(key+"\t"+map.get(key)));
+        
+        map.forEach((key,value)->System.out.println(key+"==>"+value));
+    }
+
+}
+
+package com.ge.training.collections;
+
+class A{
+    private static int counter;
+    A()
+    {
+        counter++;
+    }
+    public static int getCounter() {
+        return counter;
+    }
+    static {
+        String count=System.getProperty("count");
+        counter=Integer.parseInt(count);
+    }
+    
+}
+
+public class StaticBlockTest {
+    public static void main(String[] args) {
+        A a1=new A();
+        A a2=new A();
+        A a3=new A();
+        System.out.println(A.getCounter());
+    }
+
+}
+
+C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\SeventhPrj\bin>java -Dcount=50 com.ge.training.collections.StaticBlockTest
+
+
+C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\SeventhPrj\bin>java -Dcount=500 com.ge.training.collections.StaticBlockTest
+
+
+C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\SeventhPrj\bin>java -Dcount=100 com.ge.training.collections.StaticBlockTest
+
+package com.ge.training.threads;
+
+class First implements Runnable{
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        for(int i=1;i<=100;i++) {
+            System.out.println("inside first thread "+i);
+        }
+    }
+    
+}
+
+class Second implements Runnable{
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        for(int i=1;i<=100;i++) {
+            System.out.println("inside second thread "+i);
+        }
+    }
+    
+}
+public class ThreadTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        First f=new First();
+        Second s=new Second();
+        Thread t1=new Thread(f);
+        Thread t2=new Thread(s);
+        t1.start();
+        t2.start();
+        for(int i=1;i<=100;i++) {
+            System.out.println("inside main thread "+i);
+        }
+    }
+
+}
+
+
+package com.ge.training.threads;
+
+class FirstThread extends Thread{
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        for(int i=1;i<=100;i++) {
+            System.out.println("inside first thread "+i);
+        }
+    }
+    
+}
+
+class SecondThread extends Thread{
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        for(int i=1;i<=100;i++) {
+            System.out.println("inside second thread "+i);
+        }
+    }
+    
+}
+public class ThreadTest2 {
+public static void main(String[] args) {
+    FirstThread f=new FirstThread();
+    SecondThread s=new SecondThread();
+    f.start();
+    s.start();
+}
+}
+
+package com.ge.training.threads;
+
+public class ThreadTest3 {
+public static void main(String[] args) {
+    Thread t=new Thread(()-> {
+        System.out.println("Going to sleep for 5 secs");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Interrupted while sleeping");
+        }
+        System.out.println("After waking up");
+    });
+    t.start();
+}
+}
+
+
+package com.ge.training.threads;
+
+public class ThreadTest3 {
+public static void main(String[] args) {
+    Thread t1=new Thread(()-> {
+        System.out.println("Going to sleep for 5 secs");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            System.out.println("Interrupted while sleeping");
+        }
+        System.out.println("After waking up");
+    });
+    t1.start();
+    try {
+        Thread.sleep(500);
+    } catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    System.out.println("main thread is going to interrup thread t1");
+    t1.interrupt();
+}
+}
+
+
+package com.ge.training.threads;
+
+class XThread extends Thread{
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        for(int i=1;i<=100;i++) {
+            System.out.println("Within XThread "+i);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+    
+}
+public class ThreadTest4 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        XThread xt=new XThread();
+        xt.start();
+        for(int i=1;i<=25;i++) {
+            System.out.println("Inside main thread "+i);
+        }
+        try {
+            xt.join(); //main thread goes to blocked state till xt is completed
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("is XThread  alive-->"+xt.isAlive());
+        for(int i=26;i<=50;i++) {
+            System.out.println("Inside main thread "+i);
+        }
+
+    }
+
+}
+
+
+
+package com.ge.training.threads;
+
+class X implements Runnable{
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        display();
+    }
+    synchronized public void display()
+    {
+        System.out.println("--A--");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("--B--");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("--C--");
+        
+    }
+}
+
+public class ThreadTest5 {
+    public static void main(String[] args) {
+        X x=new X();
+        Thread t1=new Thread(x);
+        Thread t2=new Thread(x);
+        t1.setName("First Thread");
+        t2.setName("Second Thread");
+        t1.start();
+        t2.start();
+    }
+
+}
+
+
+package com.ge.training.threads;
+
+class Y implements Runnable{
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        display();
+    }
+    public void display()
+    {
+        synchronized(this) { //beginning of synchronized block
+        System.out.println("--A--");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("--B--");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("--C--");
+        }//end of synchronized block
+    }
+}
+
+public class ThreadTest6 {
+    public static void main(String[] args) {
+        Y y=new Y();
+        Thread t1=new Thread(y);
+        Thread t2=new Thread(y);
+        t1.setName("First Thread");
+        t2.setName("Second Thread");
+        t1.start();
+        t2.start();
+    }
+
+}
+
+package com.ge.training.threads;
+
+class F{
+    
+}
+
+class AThread extends Thread{
+    private F f;
+    
+
+    public AThread(F f) {
+        super();
+        this.f = f;
+    }
+
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        
+        synchronized(f) {
+            System.out.println(Thread.currentThread().getName()+" is going to invoke wait() on f");
+            try {
+                f.wait();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName()+" got unblocked");
+        }
+        
+        
+    }
+    
+}
+
+
+class BThread extends Thread{
+    private F f;
+    
+
+    public BThread(F f) {
+        super();
+        this.f = f;
+    }
+
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        synchronized(f) {
+            System.out.println(Thread.currentThread().getName()+" is going to invoke notify() on f");
+            f.notify();
+            System.out.println(Thread.currentThread().getName()+" after invoking notify() on f");
+        }
+        
+        
+    }
+    
+}
+
+public class ThreadTest7 {
+public static void main(String[] args) {
+    F f=new F();
+    AThread aThread=new AThread(f);
+    aThread.setName("First Thread");
+    BThread bThread=new BThread(f);
+    bThread.setName("Second Thread");
+    aThread.start();
+    bThread.start();
+}
+}
+
+
+package com.ge.training.threads;
+
+class CThread extends Thread{
+    private F f;
+    
+
+    public CThread(F f) {
+        super();
+        this.f = f;
+    }
+
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        synchronized(f) {
+            System.out.println(Thread.currentThread().getName()+" is going to invoke notifyAll() on f");
+            f.notifyAll();
+            System.out.println(Thread.currentThread().getName()+" after invoking notifyAll() on f");
+        }
+        
+        
+    }
+    
+}
+
+public class ThreadTest8 {
+public static void main(String[] args) {
+    F f=new F();
+    for(int i=1;i<=10;i++) {
+        AThread t=new AThread(f);
+        t.setName("AThread "+i);
+        t.start();
+    }
+    CThread cThread=new CThread(f);
+    cThread.setName("Notifying Thread");
+    cThread.start();
+}
+}
+
+https://tcheck.co/HgKcZc
+
+
