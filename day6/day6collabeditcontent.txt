@@ -1,0 +1,925 @@
+https://drive.google.com/drive/folders/12b3u2CI5nbTxQFAzQNawIFnzxGBEGzIh?usp=sharing
+
+https://github.com/subramanianp/gejava17thaug2023.git
+
+package com.ge.training.threads;
+
+class X{
+    
+}
+class Y{
+    
+}
+
+class FirstThread extends Thread{
+    private X x;
+    private Y y;
+    public FirstThread(X x, Y y) {
+        super();
+        this.x = x;
+        this.y = y;
+    }
+    public void run()
+    {
+        System.out.println("First thread is going to acquire lock on x");
+        synchronized (x) {
+            System.out.println("First thread has acquired lock on x");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("First thread is trying to acquire lock on y");
+            synchronized (y) {
+                System.out.println("First thread has acquired lock on y");
+            }
+        }
+    }
+    
+}
+
+class SecondThread extends Thread{
+    private X x;
+    private Y y;
+    public SecondThread(X x, Y y) {
+        super();
+        this.x = x;
+        this.y = y;
+    }
+    public void run()
+    {
+        System.out.println("Second thread is going to acquire lock on y");
+        synchronized (y) {
+            System.out.println("Second thread has acquired lock on y");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            System.out.println("Second thread is trying to acquire lock on x");
+            synchronized (x) {
+                System.out.println("Second thread has acquired lock on x");
+            }
+        }
+    }
+    
+}
+
+public class DeadLockTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        X x1=new X();
+        Y y1=new Y();
+        FirstThread ft=new FirstThread(x1, y1);
+        SecondThread st=new SecondThread(x1, y1);
+        ft.setName("First-Thread");
+        st.setName("Second-Thread");
+        ft.start();
+        st.start();
+
+    }
+
+}
+
+
+java -classpath C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\EighthPrj\bin com.ge.training.threads.DeadLockTest
+
+jps -l
+
+jconsole pid
+
+
+mysql> create database trainingdb;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use trainingdb;
+Database changed
+mysql> create table employee(emp_id integer,name varchar(20),designation varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into employee values(1001,"Arvind","Developer");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(1002,"Surya","Accountant");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(1003,"Rajiv","Developer");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
+
+
+https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-5.1.39.zip
+
+package com.ge.training.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class JdbcTest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Connection con=null;
+        try {
+            String username=System.getProperty("user");
+            String password=System.getProperty("password");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/trainingdb",
+                    username,password);
+            Statement st=con.createStatement();
+            String query="select * from employee";
+            ResultSet rs=st.executeQuery(query);
+            while(rs.next()) {
+                System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally {
+            if(con!=null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+}
+
+
+
+package com.ge.training.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class JdbcTest2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Connection con=null;
+        try {
+            String username=System.getProperty("user");
+            String password=System.getProperty("password");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/trainingdb",
+                    username,password);
+            
+            String query="select * from employee where designation=?";
+            PreparedStatement pst=con.prepareStatement(query);
+            pst.setString(1, args[0]);
+            ResultSet rs=pst.executeQuery();
+            while(rs.next()) {
+                System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally {
+            if(con!=null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+}
+
+
+
+package com.ge.training.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class JdbcTest3 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Connection con=null;
+        try {
+            String username=System.getProperty("user");
+            String password=System.getProperty("password");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/trainingdb",
+                    username,password);
+            
+            String sql="insert into employee values(?,?,?)";
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setInt(1, Integer.parseInt(args[0]));
+            pst.setString(2, args[1]);
+            pst.setString(3, args[2]);
+            int count=pst.executeUpdate();
+            if(count>0) {
+                System.out.println("row successfully inserted");
+            }
+            else {
+                System.out.println("error in inserting");
+            }
+            
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        finally {
+            if(con!=null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+}
+
+<dependencies>
+  <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.39</version>
+</dependency>
+  
+  </dependencies>
+  
+  jar tvf C:\Users\ADMIN\Documents\workspace-sts-3.9.10.RELEASE\testjdbc\target\testjdbc-1.0.1.jar
+  
+  
+  
+  <dependencies>
+  <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.39</version>
+</dependency>
+  <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>5.2.12.Final</version>
+</dependency>
+  
+  </dependencies>
+  
+  
+  
+  
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  version="2.1">
+  <persistence-unit name="test-unit">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+      <property name="javax.persistence.jdbc.url"
+        value="jdbc:mysql://localhost:3306/trainingdb" />
+      <property name="javax.persistence.jdbc.user" value="root" />
+      <property name="javax.persistence.jdbc.password"
+        value="root" />
+       <property name="hibernate.show_sql" value="true" />
+      <property name="hibernate.dialect"
+        value="org.hibernate.dialect.MySQLInnoDBDialect" />
+        <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
+</persistence>
+
+
+package com.ge.training.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="customer_tbl")
+public class Customer {
+    @Id
+    @Column(name = "cust_id")
+    private int custId;
+    @Column(name = "cust_name")
+    private String name;
+    private String email;
+    public int getCustId() {
+        return custId;
+    }
+    public void setCustId(int custId) {
+        this.custId = custId;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public Customer(int custId, String name, String email) {
+        super();
+        this.custId = custId;
+        this.name = name;
+        this.email = email;
+    }
+    public Customer() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    
+
+}
+
+
+package com.ge.training.app;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import com.ge.training.domain.Customer;
+
+public class JPATest1 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        EntityManagerFactory factory=Persistence.createEntityManagerFactory("test-unit");
+        EntityManager em=factory.createEntityManager();
+        Customer c1=new Customer(4001, "Rajiv", "rajiv@gmail.com");
+        Customer c2=new Customer(4002, "Akash", "akash@yahoo.com");
+        EntityTransaction tx= em.getTransaction();
+        tx.begin();
+        em.persist(c1);
+        em.persist(c2);
+        tx.commit();
+        em.close();
+        factory.close();
+        
+    }
+
+}
+
+
+mysql> show tables;
+
+
+mysql> select * from customer_tbl;
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import com.ge.training.domain.Customer;
+
+public class JPATest2 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        EntityManagerFactory factory=Persistence.createEntityManagerFactory("test-unit");
+        EntityManager em=factory.createEntityManager();
+        String jpaQL="select c from Customer c";
+        Query query=em.createQuery(jpaQL);
+        List<Customer> customers= query.getResultList();
+        for(Customer customer:customers) {
+            System.out.println(customer.getCustId()+"\t"+customer.getName()+"\t"+customer.getEmail());
+        }
+        em.close();
+        factory.close();
+        
+    }
+
+}
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import com.ge.training.domain.Customer;
+
+public class JPATest3 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        EntityManagerFactory factory=Persistence.createEntityManagerFactory("test-unit");
+        EntityManager em=factory.createEntityManager();
+        String jpaQL="select c.custId,c.name from Customer c";
+        Query query=em.createQuery(jpaQL);
+        List<Object[]> list= query.getResultList();
+        for(Object[] arr:list) {
+            System.out.println(arr[0]+"\t"+arr[1]);
+        }
+        em.close();
+        factory.close();
+        
+    }
+
+}
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import com.ge.training.domain.Customer;
+
+public class JPATest4 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        EntityManagerFactory factory=Persistence.createEntityManagerFactory("test-unit");
+        EntityManager em=factory.createEntityManager();
+        String nativeQuery="select * from customer_tbl";
+        Query query=em.createNativeQuery(nativeQuery);
+        List<Object[]> list= query.getResultList();
+        for(Object[] arr:list) {
+            System.out.println(arr[0]+"\t"+arr[1]+"\t"+arr[2]);
+        }
+        em.close();
+        factory.close();
+        
+    }
+
+}
+
+package com.ge.training.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="address_tbl")
+public class Address {
+    @Id
+    @Column(name="address_id")
+    private int addressId;
+    private String location;
+    private String city;
+    public int getAddressId() {
+        return addressId;
+    }
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
+    public String getLocation() {
+        return location;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public Address(int addressId, String location, String city) {
+        super();
+        this.addressId = addressId;
+        this.location = location;
+        this.city = city;
+    }
+    public Address() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+
+}
+
+--------------
+
+package com.ge.training.domain;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="employee_tbl")
+public class Employee {
+    @Id
+    @Column(name="emp_id")
+    private int empId;
+    @Column(name ="emp_name")
+    private String empName;
+    private String designation;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "e_id")//additional column created in child table to maintain the relationship
+    private List<Address> addresses;
+    public Employee(int empId, String empName, String designation) {
+        super();
+        this.empId = empId;
+        this.empName = empName;
+        this.designation = designation;
+    }
+    public Employee() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    public int getEmpId() {
+        return empId;
+    }
+    public void setEmpId(int empId) {
+        this.empId = empId;
+    }
+    public String getEmpName() {
+        return empName;
+    }
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+    public String getDesignation() {
+        return designation;
+    }
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+}
+
+
+
+
+-------
+package com.ge.training.app;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import com.ge.training.domain.Customer;
+
+public class JPATest4 {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        EntityManagerFactory factory=Persistence.createEntityManagerFactory("test-unit");
+        EntityManager em=factory.createEntityManager();
+        String nativeQuery="select * from customer_tbl";
+        Query query=em.createNativeQuery(nativeQuery);
+        List<Object[]> list= query.getResultList();
+        for(Object[] arr:list) {
+            System.out.println(arr[0]+"\t"+arr[1]+"\t"+arr[2]);
+        }
+        em.close();
+        factory.close();
+        
+    }
+
+}
+
+
+package com.ge.training.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="address_tbl")
+public class Address {
+    @Id
+    @Column(name="address_id")
+    private int addressId;
+    private String location;
+    private String city;
+    public int getAddressId() {
+        return addressId;
+    }
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
+    public String getLocation() {
+        return location;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public Address(int addressId, String location, String city) {
+        super();
+        this.addressId = addressId;
+        this.location = location;
+        this.city = city;
+    }
+    public Address() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    
+    
+
+}
+
+
+package com.ge.training.domain;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="employee_tbl")
+public class Employee {
+    @Id
+    @Column(name="emp_id")
+    private int empId;
+    @Column(name ="emp_name")
+    private String empName;
+    private String designation;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "e_id")//additional column created in child table to maintain the relationship
+    private List<Address> addresses;
+    public Employee(int empId, String empName, String designation) {
+        super();
+        this.empId = empId;
+        this.empName = empName;
+        this.designation = designation;
+    }
+    public Employee() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    public int getEmpId() {
+        return empId;
+    }
+    public void setEmpId(int empId) {
+        this.empId = empId;
+    }
+    public String getEmpName() {
+        return empName;
+    }
+    public void setEmpName(String empName) {
+        this.empName = empName;
+    }
+    public String getDesignation() {
+        return designation;
+    }
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+    
+    
+    
+
+}
+
+
+
+
+package com.ge.training.app;
+
+import java.util.Arrays;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import com.ge.training.domain.Address;
+import com.ge.training.domain.Customer;
+import com.ge.training.domain.Employee;
+
+public class OneToManyInsertTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        EntityManagerFactory factory=Persistence.createEntityManagerFactory("test-unit");
+        EntityManager em=factory.createEntityManager();
+        Employee e1=new Employee(1001, "Surya", "Developer");
+        Employee e2=new Employee(1002, "Amar", "Accountant");
+        Address address11=new Address(501, "Ulsoor", "Bangalore");
+        Address address12=new Address(502, "Hinjewadi", "Pune");
+        
+        Address address21=new Address(503, "Punjakutta", "Hyderabad");
+        Address address22=new Address(504, "Mambalam", "Chennai");
+        
+        e1.setAddresses(Arrays.asList(address11,address12));
+        e2.setAddresses(Arrays.asList(address21,address22));
+        
+        EntityTransaction tx= em.getTransaction();
+        tx.begin();
+        em.persist(e1);
+        em.persist(e2);
+        tx.commit();
+        em.close();
+        factory.close();
+        
+    }
+
+}
+
+mysql> show tables;
+
+mysql> select * from employee_tbl;
+
+mysql> select * from address_tbl;
+
+package com.ge.training.app;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import com.ge.training.domain.Address;
+import com.ge.training.domain.Customer;
+import com.ge.training.domain.Employee;
+
+public class OneToManyFetchTest {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        EntityManagerFactory factory=Persistence.createEntityManagerFactory("test-unit");
+        EntityManager em=factory.createEntityManager();
+        
+        
+        String jpaQL="select e from Employee e";
+        Query query=em.createQuery(jpaQL);
+        List<Employee> employees=query.getResultList();
+        for(Employee e:employees) {
+            System.out.println(e.getEmpId()+"\t"+e.getEmpName()+"\t"+e.getDesignation());
+            System.out.println("Addresses of this employee");
+            List<Address> addresses=e.getAddresses();
+            for(Address address:addresses) {
+                System.out.println(address.getAddressId()+"\t"+address.getLocation()
+                +"\t"+address.getCity());
+            }
+        }
+        em.close();
+        factory.close();
+        
+    }
+
+}
+
+
+
+
+<dependencies>
+  <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>4.2.8.RELEASE</version>
+</dependency>
+  
+  <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>4.2.8.RELEASE</version>
+</dependency>
+  
+  </dependencies>
+
+package com.ge.training.beans;
+
+public class Customer {
+    private String id;
+    private String name;
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
+
+}
+
+
+
+<bean id="cust" class="com.ge.training.beans.Customer">
+<property name="id" value="1001"></property>
+<property name="name" value="Arvind"></property>
+</bean>
+
+
+package com.ge.training.app;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.Customer;
+
+public class DITest1 {
+public static void main(String[] args) {
+    ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
+    Customer customer=(Customer)context.getBean("cust");
+    System.out.println(customer.getId()+"\t"+customer.getName());
+}
+}
+
+
+
+
+

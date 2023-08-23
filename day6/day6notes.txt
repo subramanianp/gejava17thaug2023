@@ -1,0 +1,205 @@
+JDBC------------Java Database Connectivity api
+Database independent api to interact with RDBMS.
+
+The database vendors provide a jdbc url and driver class  to interact with the rbdms.
+Also they provide a jdbc driver in the format of jar file which contains all the supporting jdbc classes.
+
+Most of the jdbc classes are part of java.sql package.
+
+
+Maven tool:
+
+Maven is a java based build tool to automate compiling,builing and packaging java applications.
+
+In the java community forum, there is a common agreement that all open source libraries will be
+hosted at the global maven repository(http://mvnrepository.com).
+
+Each library is considered as a maven dependency.
+This maven dependency should be added to the maven config file(pom.xml).
+
+After the maven dependency added to the maven config file, if the project is built, the maven dependencies
+are downloaded from the global repository to the local maven repository.
+
+The local maven repository is ~/.m2/repository directory.
+
+~-------user's home directory.
+
+Each maven dependency has 3 attributes namely group-id,artifact-id and version.
+
+group-id------------company name or project's name
+artifact-id---------the library name
+version-------------version of the library.
+
+The jar file name is artifactid-version.jar.
+It will be located under groupid/articatid/version directory which will be created under
+local maven repository.
+
+
+ORM tool:
+
+ORM-------------Object Relational Mapping
+
+ORM tools provide an object oriented view of data.
+
+If there is an RDBMS table called employee with columns id,name and designation, it can be mapped to 
+the following java class.
+
+class Employee{
+	int id;
+	String name;
+	String designation;
+}
+
+Each object of Employee class represents one row in the table.
+
+Examples: Hibernate, TopLink and IBatis
+
+
+java app----------->orm tool
+			|jdbc apis
+		      RDBMS
+
+
+
+
+JPA(Java Persistence API):
+
+
+Specification for ORM tools. Using ORM independent api, we can interact with RDBMS.
+ORM tools like hibernate,toplink,kodo,eclipselink and openjpa are implementations of JPA specification.
+
+java app----------------->jpa
+			   |
+		          orm tool
+			   |jdbc apis
+			RDBMS
+
+
+documentbase
+   |-------------------------
+  META-INF		    |
+   |                       *.class 
+  persistence.xml		
+
+persistence.xml is the configuration file of JPA.
+This is the file which contains the details of the orm tool to be used,database url,username,password
+and other orm specific properties.
+
+
+
+steps for creating jpa based application.
+
+1. create META-INF/persistence.xml to configure datasource ,jpa and orm tool specific properties.
+2. create the domain/entity class.
+This class represents rdbms table.
+	
+for example if the table has 3 columns namely id,name and designation, this class should have those
+respective data members and these data members will be mapped to the columns of the table.
+
+This class should be prefixed with @Entity annotation.
+
+When a table is mapped with orm tools,it is mandatory that the table should have a primary key.
+
+The primary key data member should be prefixed with @Id annotation.
+
+@Entity and @Id annotations are mandatory.
+
+@Table and @Column annotations are optional.
+
+By default , the table name is same as the entity class name.
+If it has to be changed, we can configure it using @Table annotation.
+
+Also by default, the column name is same as the instance variable name.
+If it has to be changed, we can configure it using @Column annotation.
+
+
+3. write the application code to read/write data.
+
+
+
+
+employee_tbl
+
+emp_id	emp_name	designation
+1001	Arvind		Developer
+1002	Deva		Accountant
+
+
+address_tbl
+
+e_id	address_id	location	city
+1001	401		Hebbal		Bangalore
+1001	402		Hinjewadi	Pune
+1002	403		Sector-19	Noida
+1002	404		Malad East	Mumbai
+1002	405		Punjakutta	Hyderabad
+
+
+class Employee{
+	private int empId;
+	private String empName;
+	private String designation;
+	private List<Address> addresses;//one to many relationship
+}
+
+class Address{
+	private int addressId;
+	private String location;
+	private String city;
+}
+	
+
+
+Spring Framework:
+
+
+standalone application-----------single user application
+enterprise application-----------multiple user application
+
+Enterprise applications provide middleware services like
+
+Life Cycle Management---------Dependency Injection
+Transaction
+Security
+Multithreading
+Connection Pooling
+
+J2EE/JavaEE & Spring are two different technologies for developing enterprise applications in java.
+JavaEE-------Java Enterprise Edition
+Applications developed using J2EE need an application server to run.
+Spring is more lightweight  than Java EE and that's why it has become defacto technology for 
+developing enterprise applications in Java.
+
+Dependency Injection(DI ---also called IoC(Inversion of Control)):
+
+If an object depends on having an instance of another object, the needed object is automatically instantiated
+and injected into the dependent object.
+
+
+
+class Customer{
+	private int id;
+	private String name;
+	private Address address;
+}
+
+class Address{
+	private String location;
+	private String city;
+}	
+
+without dependency injection,
+
+Customer c=new Customer();
+Address a=new Address();
+c.setAddress(a);
+
+with dependency injection,
+
+Customer c=framework.getCustomerObject();
+Address a=c.getAddress();
+
+spring bean configuration file:
+
+This is an xml file where we configure the beans whose objects should added to IoC container
+beans------java classes which have getters/setters.
