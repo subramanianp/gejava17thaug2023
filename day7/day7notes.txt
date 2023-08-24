@@ -1,0 +1,106 @@
+autowire---byType---------injects the object based on the type. If there are multiple objects of 
+the required type are available, it will thrown an exception.
+
+
+autowire---byName--------looks for the exact bean whose id is matching with the name of the variable in
+the class and injects that bean.
+If no bean with that name is available, it will not be initialized.
+
+AbstractApplicationContext context=new ClassPathXmlApplicationContext("beans-collection.xml");
+
+ClassPathXMLApplicationContext looks up for a bean config file with the name beans-collection.xml
+in the classpath and instantiates an IoC container with the objects defined in the config file.
+
+IoC container-----------container for bean objects------Any object within the IoC container is eligible 
+for dependency injection.
+
+Dependency Injection(DI) is also called Inversion of Control(IoC).
+
+Control--------top down approach----------The dependent objects are initialized before needed objects.
+		ie-----Customer is initialized before Address.
+
+But Dependency Injection uses a bottom up approach.--------The dependent (customer) object's initialization
+is completed only after the needed object's(address) initialization.
+
+That's why it is called Inversion of Control.
+
+context represents the IoC container.
+
+context.close()-------------destroys the objects within the container and the container is shutdown.
+
+
+@Component--------------any java class perfixed with @Component annotation is identified as a bean 
+by the IoC container.
+@Autowired-------------is used to inject one bean into another bean.
+
+
+If a bean is prefixed with @Component annotation, the default bean id is defined with the following rule.
+
+if the class name is Xxxx, the bean id is xxxx.
+so if the class name is Customer, the bean is customer.
+
+
+The bean objects can be configured through a java class instead of an xml.
+The configuration class is prefixed with @Configuration annotation.
+
+@Bean:
+
+This annotation is applied on a method to specify that it returns a bean to be managed by IoC
+container.
+
+
+@SpringBootApplication annotation is equivalent to the following 3 annotations.
+
+@SpringBootConfiguration-------equivalent to @Configuration----treats the current class as a bean config class
+@EnableAutoConfiguration
+@ComponentScan-----------------scans for components which are prefixed annotations like @Component,
+@Service,@Repository,@Controller,@RestController and etc.
+
+@Component-------to mark a plain java class  as a spring bean
+@Service---------same as @Component and used to denote that it is used as business service
+@Repository------same as @Component and used to denote that it is used to interact with database
+@Controller------same as @Component and used to denote that it is used to develop web pages
+@RestController--same as @Controller and used to denote that it is producing rest based data---meant for
+developing restful webservices.
+
+
+client-----------controller/restcontroller---------service---------repository------------database/legacy data 
+
+client tier------presentation tier-----------------business tier---integration tier------resource tier
+
+
+
+
+@RestController----------------@Controller+@ResponseBody
+
+
+client tier-------presentation tier------------------business tier
+		  @RestController			@Service
+
+	
+In RESTful webservice, at the end of a POST request, a new url should be created in the server.
+
+
+At the end of a DELETE request, an existing url should have been removed.
+
+
+For an object to be marshalled to xml and vice versa, it should be jax-b compliant.
+
+jax-b-----------java api for xml binding.
+
+A jax-b compliant class 
+
+1. should be prefixed with @XMLRootElement annotation.
+2. should have getter/setter method for the data memebers.
+3. should have a no-argument constructor.
+
+
+
+
+
+
+
+
+
+
+

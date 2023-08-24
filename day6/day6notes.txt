@@ -203,3 +203,4 @@ spring bean configuration file:
 
 This is an xml file where we configure the beans whose objects should added to IoC container
 beans------java classes which have getters/setters.
+

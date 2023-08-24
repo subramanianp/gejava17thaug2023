@@ -1,0 +1,1135 @@
+package com.ge.training.beans;
+
+public class Address {
+	private String location;
+	private String city;
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
+
+}
+
+package com.ge.training.beans;
+
+public class Customer {
+	private String id;
+	private String name;
+	private Address address;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	
+
+}
+
+
+
+
+
+<bean id="cust" class="com.ge.training.beans.Customer" autowire="byType">
+<property name="id" value="1001"></property>
+<property name="name" value="Arvind"></property>
+</bean>
+
+<bean id="add" class="com.ge.training.beans.Address">
+<property name="location" value="Hebbal"></property>
+<property name="city" value="Bangalore"></property>
+</bean>
+
+
+package com.ge.training.app;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.Address;
+import com.ge.training.beans.Customer;
+
+public class DITest1 {
+public static void main(String[] args) {
+	AbstractApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
+	Customer customer=(Customer)context.getBean("cust");
+	System.out.println(customer.getId()+"\t"+customer.getName());
+	Address address=customer.getAddress();
+	System.out.println("Location:"+address.getLocation());
+	System.out.println("City:"+address.getCity());
+	context.close();
+}
+}
+
+
+
+
+<bean id="cust" class="com.ge.training.beans.Customer" autowire="byName">
+<property name="id" value="1001"></property>
+<property name="name" value="Arvind"></property>
+</bean>
+
+<bean id="add" class="com.ge.training.beans.Address">
+<property name="location" value="Hebbal"></property>
+<property name="city" value="Bangalore"></property>
+</bean>
+<bean id="address" class="com.ge.training.beans.Address">
+<property name="location" value="Punjakutta"></property>
+<property name="city" value="Hyderabad"></property>
+</bean>
+
+
+package com.ge.training.beans.collections;
+
+import java.util.List;
+
+public class Customer {
+	private String id;
+	private String name;
+	private List<Address> addresses;
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+	
+	
+
+}
+
+
+
+package com.ge.training.beans.collections;
+
+public class Address {
+	private String location;
+	private String city;
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
+
+}
+
+
+beans-collection.xml
+
+
+<bean id="cust" class="com.ge.training.beans.collections.Customer" autowire="byType">
+<property name="id" value="1001"></property>
+<property name="name" value="Arvind"></property>
+</bean>
+
+<bean id="address1" class="com.ge.training.beans.collections.Address">
+<property name="location" value="Hebbal"></property>
+<property name="city" value="Bangalore"></property>
+</bean>
+<bean id="address2" class="com.ge.training.beans.collections.Address">
+<property name="location" value="Punjakutta"></property>
+<property name="city" value="Hyderabad"></property>
+</bean>
+<bean id="address3" class="com.ge.training.beans.collections.Address">
+<property name="location" value="Malad East"></property>
+<property name="city" value="Mumbai"></property>
+</bean>
+
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.collections.Address;
+import com.ge.training.beans.collections.Customer;
+
+
+
+public class DITest2 {
+public static void main(String[] args) {
+	AbstractApplicationContext context=new ClassPathXmlApplicationContext("beans-collection.xml");
+	Customer customer=(Customer)context.getBean("cust");
+	System.out.println(customer.getId()+"\t"+customer.getName());
+	List<Address> addresses=customer.getAddresses();
+	for(Address address:addresses) {
+		System.out.println(address.getLocation()+"\t"+address.getCity());
+	}
+	
+	
+	context.close();
+}
+}
+
+
+
+package com.ge.training.beans.annotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Customer {
+	private int id=1001;
+	private String name="Rajiv";
+	
+	@Autowired
+	private Address address;
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	
+
+}
+
+
+
+package com.ge.training.beans.annotations;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Address {
+	private String location="KR Puram";
+	private String city="Bangalore";
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
+
+}
+
+
+
+
+Beans-components.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+<context:component-scan base-package="com.ge.training.beans.annotations"></context:component-scan>
+
+</beans>
+
+package com.ge.training.beans.annotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Customer {
+	private int id=1001;
+	private String name="Rajiv";
+	
+	@Autowired
+	private Address address;
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	
+
+}
+
+
+
+package com.ge.training.beans.annotations;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Address {
+	private String location="KR Puram";
+	private String city="Bangalore";
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
+
+}
+
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.annotations.Address;
+import com.ge.training.beans.annotations.Customer;
+
+
+
+
+public class DITest3 {
+public static void main(String[] args) {
+	AbstractApplicationContext context=new ClassPathXmlApplicationContext("beans-components.xml");
+	Customer customer=(Customer)context.getBean("customer");
+	System.out.println(customer.getId()+"\t"+customer.getName());
+	Address address=customer.getAddress();
+	System.out.println("Location: "+address.getLocation());
+	System.out.println("City: "+address.getCity());
+	
+	
+	context.close();
+}
+}
+
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.annotations.Address;
+import com.ge.training.beans.annotations.Customer;
+
+
+
+
+public class DITest3 {
+public static void main(String[] args) {
+	AbstractApplicationContext context=new ClassPathXmlApplicationContext("beans-components.xml");
+	Customer customer=(Customer)context.getBean(Customer.class);
+	//Customer customer=(Customer)context.getBean("cust);
+	System.out.println(customer.getId()+"\t"+customer.getName());
+	Address address=customer.getAddress();
+	System.out.println("Location: "+address.getLocation());
+	System.out.println("City: "+address.getCity());
+	
+	
+	context.close();
+}
+}
+
+
+
+package com.ge.training.beans.annotationsandxml;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component("cust")
+public class Customer {
+	private int id=1001;
+	private String name="Rajiv";
+	
+	@Autowired
+	private List<Address> addresses;
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+	
+	
+
+}
+
+package com.ge.training.beans.annotationsandxml;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Address {
+	private String location="KR Puram";
+	private String city="Bangalore";
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	
+
+}
+
+<context:component-scan base-package="com.ge.training.beans.annotationsandxml"></context:component-scan>
+
+<bean id="address1" class="com.ge.training.beans.annotationsandxml.Address">
+<property name="location" value="Hebbal"></property>
+<property name="city" value="Bangalore"></property>
+</bean>
+<bean id="address2" class="com.ge.training.beans.annotationsandxml.Address">
+<property name="location" value="Punjakutta"></property>
+<property name="city" value="Hyderabad"></property>
+</bean>
+<bean id="address3" class="com.ge.training.beans.annotationsandxml.Address">
+<property name="location" value="Malad East"></property>
+<property name="city" value="Mumbai"></property>
+</bean>
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.annotationsandxml.Address;
+import com.ge.training.beans.annotationsandxml.Customer;
+
+
+
+
+public class DITest4 {
+public static void main(String[] args) {
+	AbstractApplicationContext context=new ClassPathXmlApplicationContext("beans-component-collection.xml");
+	Customer customer=(Customer)context.getBean("cust");
+	
+	System.out.println(customer.getId()+"\t"+customer.getName());
+	List<Address> addresses=customer.getAddresses();
+	for(Address address:addresses) {
+		System.out.println(address.getLocation()+"\t"+address.getCity());
+	}
+	
+	
+	context.close();
+}
+}
+
+
+
+package com.ge.training.config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = {"com.ge.training.beans.annotations"})
+public class BeanConfig {
+
+}
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.annotations.Address;
+import com.ge.training.beans.annotations.Customer;
+import com.ge.training.config.BeanConfig;
+
+
+
+
+public class DITestWithoutXML {
+public static void main(String[] args) {
+	AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext(BeanConfig.class);;
+	Customer customer=(Customer)context.getBean("cust");
+	
+	System.out.println(customer.getId()+"\t"+customer.getName());
+	Address address=customer.getAddress();
+	
+	System.out.println(address.getLocation()+"\t"+address.getCity());
+	context.close();
+}
+}
+
+
+package com.ge.training.beans.annotations;
+
+public class A {
+private String msg="hello";
+
+public String getMsg() {
+	return msg;
+}
+
+public void setMsg(String msg) {
+	this.msg = msg;
+}
+
+}
+
+
+package com.ge.training.beans.annotations;
+
+public class B {
+	private int i=10;
+
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+	
+}
+
+
+
+package com.ge.training.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import com.ge.training.beans.annotations.A;
+import com.ge.training.beans.annotations.B;
+
+@Configuration
+@ComponentScan(basePackages = {"com.ge.training.beans.annotations"})
+public class BeanConfig {
+	
+	@Bean
+	public A getA() {
+		return new A();
+	}
+	@Bean
+	public B getB()
+	{
+		return new B();
+	}
+	
+
+}
+
+
+
+package com.ge.training.app;
+
+import java.util.List;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.ge.training.beans.annotations.A;
+import com.ge.training.beans.annotations.Address;
+import com.ge.training.beans.annotations.B;
+import com.ge.training.beans.annotations.Customer;
+import com.ge.training.config.BeanConfig;
+
+
+
+
+public class DITestWithoutXML {
+public static void main(String[] args) {
+	AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext(BeanConfig.class);;
+	/*Customer customer=(Customer)context.getBean("cust");
+	
+	System.out.println(customer.getId()+"\t"+customer.getName());
+	Address address=customer.getAddress();
+	
+	System.out.println(address.getLocation()+"\t"+address.getCity());
+	*/
+	A a=context.getBean(A.class);
+	B b=context.getBean(B.class);
+	System.out.println(a.getMsg());
+	System.out.println(b.getI());
+	context.close();
+}
+}
+
+
+
+package com.ge.training.beans.annotations;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class A {
+private String msg="hello";
+
+@Autowired
+private B b;
+
+
+
+public B getB() {
+	return b;
+}
+
+public void setB(B b) {
+	this.b = b;
+}
+
+public String getMsg() {
+	return msg;
+}
+
+public void setMsg(String msg) {
+	this.msg = msg;
+}
+
+}
+
+
+
+package com.ge.training.app;
+
+
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.ge.training.beans.annotations.A;
+import com.ge.training.beans.annotations.B;
+import com.ge.training.config.BeanConfig;
+
+
+
+
+public class DITestWithoutXML2 {
+public static void main(String[] args) {
+	AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext(BeanConfig.class);;
+	
+	A a=context.getBean(A.class);
+	System.out.println(a.getMsg());
+	B b=a.getB();
+	System.out.println(b.getI());
+	context.close();
+}
+}
+
+
+https://download.springsource.com/release/STS4/4.19.1.RELEASE/dist/e4.28/spring-tool-suite-4-4.19.1.RELEASE-e4.28.0-win32.win32.x86_64.self-extracting.jar
+
+java -jar spring-tool-suite-4-4.19.1.RELEASE-e4.28.0-win32.win32.x86_64.self-extracting.jar
+
+
+package com.ge.web.domain;
+public class Employee {
+	private int id;
+	private String name;
+	private String designation;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	public Employee(int id, String name, String designation) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.designation = designation;
+	}
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+}
+
+
+
+
+
+
+
+
+package com.ge.web;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import com.ge.web.domain.Employee;
+@SpringBootApplication
+public class WebApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(WebApplication.class, args);
+	}
+	
+	@Bean
+	public Employee getEmployee()
+	{
+		return new Employee(1001, "Arvind", "Developer");
+	}
+}
+
+
+
+package com.ge.web.controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+@Controller
+@RequestMapping("/first")
+public class FirstController {
+	@RequestMapping("/message")
+	public @ResponseBody String getData()
+	{
+		return "<html><body><h2>Welcome to Spring Boot</h2></body></html>";
+	}
+}
+
+
+
+http://localhost:8080/first/message
+
+
+@RequestMapping("/next") // /first/next
+	public @ResponseBody String getNextData()
+	{
+		return "<html><body><h2>This is another message from spring boot</h2></body></html>";
+	}
+
+
+package com.ge.web.controller;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.ge.web.domain.Employee;
+@RequestMapping("/emp")
+@RestController
+public class EmployeeController {
+	@GetMapping(path = "/data",produces = MediaType.APPLICATION_JSON_VALUE)
+	public Employee getData() {
+		return new Employee(1001, "Amar", "Developer");
+	}
+}
+
+
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+</dependency>
+
+
+http://localhost:8080/emp/data
+
+
+package com.ge.rest.service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
+import org.springframework.stereotype.Service;
+import com.ge.rest.domain.Employee;
+@Service
+public class EmployeeService {
+	private TreeMap<Integer, Employee> empData=new TreeMap<>();
+	
+	public EmployeeService() {
+		empData.put(1001, new Employee(1001, "Arjun", "Accountant"));
+		empData.put(1002, new Employee(1002, "Surya", "Developer"));
+		empData.put(1003, new Employee(1003, "Rajiv", "Accountant"));
+		empData.put(1004, new Employee(1004, "Deva", "Architect"));
+	}
+	
+	public Employee getEmployeeDetails(int id)
+	{
+		return empData.get(id);
+	}
+	
+	public List<Employee> getAllEmployees()
+	{
+		return new ArrayList<>(empData.values());
+	}
+	
+	public String addEmployee(Employee e)
+	{
+		int nextId=empData.lastKey()+1;
+		e.setId(nextId);
+		empData.put(nextId, e);
+		return "Employee with id "+nextId+" added successfully";
+	}
+	public String updateEmployee(int id,Employee e)
+	{
+		Employee e1=empData.get(id);
+		e1.setName(e.getName());
+		e1.setDesignation(e.getDesignation());
+		
+		return "Employee with id "+id+" updated successfully";
+	}
+	
+	public String removeEmployee(int id)
+	{
+		empData.remove(id);
+		
+		return "Employee with id "+id+" removed successfully";
+	}
+	
+}
+
+
+
+package com.ge.rest.controller;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.ge.rest.domain.Employee;
+import com.ge.rest.service.EmployeeService;
+@RestController
+@RequestMapping("/emp")
+public class EmployeeController {
+	@Autowired
+	private EmployeeService service;
+	
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Employee> getEmployee(@PathVariable("id") int empId)
+	{
+		Employee employee= service.getEmployeeDetails(empId);
+		
+		return new ResponseEntity<>(employee,HttpStatus.OK);
+	}
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Employee>> getAllEmployees()
+	{
+		List<Employee> employees= service.getAllEmployees();
+		
+		return new ResponseEntity<>(employees,HttpStatus.OK);
+	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> addEmployee(@RequestBody Employee e)
+	{
+		String responseMsg=service.addEmployee(e);
+		return new ResponseEntity<>(responseMsg,HttpStatus.CREATED);
+	}
+	@PutMapping(path="/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> updateEmployee(@PathVariable("id")int empId, @RequestBody Employee e)
+	{
+		String responseMsg=service.updateEmployee(empId, e);
+		return new ResponseEntity<>(responseMsg,HttpStatus.OK);
+	}
+	@DeleteMapping(path="/{id}",produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> removeEmployee(@PathVariable("id")int empId)
+	{
+		String responseMsg=service.removeEmployee(empId);
+		return new ResponseEntity<>(responseMsg,HttpStatus.OK);
+	}
+	
+}
+
+
+http://localhost:8080/emp
+
+https://dl.pstmn.io/download/latest/win64
+
+{
+    "name":"Arun Kumar",
+    "designation":"Architect"
+}
+
+
+package com.ge.rest.domain;
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
+public class Employee {
+	private int id;
+	private String name;
+	private String designation;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	public Employee(int id, String name, String designation) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.designation = designation;
+	}
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+}
+
+
+
+package com.ge.rest.controller;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.ge.rest.domain.Employee;
+import com.ge.rest.service.EmployeeService;
+@RestController
+@RequestMapping("/emp")
+public class EmployeeController {
+	@Autowired
+	private EmployeeService service;
+	
+	@GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE
+	})
+	public ResponseEntity<Employee> getEmployee(@PathVariable("id") int empId)
+	{
+		Employee employee= service.getEmployeeDetails(empId);
+		
+		return new ResponseEntity<>(employee,HttpStatus.OK);
+	}
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Employee>> getAllEmployees()
+	{
+		List<Employee> employees= service.getAllEmployees();
+		
+		return new ResponseEntity<>(employees,HttpStatus.OK);
+	}
+	
+	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE
+	},produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> addEmployee(@RequestBody Employee e)
+	{
+		String responseMsg=service.addEmployee(e);
+		return new ResponseEntity<>(responseMsg,HttpStatus.CREATED);
+	}
+	@PutMapping(path="/{id}",consumes = {MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE
+	},produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> updateEmployee(@PathVariable("id")int empId, @RequestBody Employee e)
+	{
+		String responseMsg=service.updateEmployee(empId, e);
+		return new ResponseEntity<>(responseMsg,HttpStatus.OK);
+	}
+	@DeleteMapping(path="/{id}",produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> removeEmployee(@PathVariable("id")int empId)
+	{
+		String responseMsg=service.removeEmployee(empId);
+		return new ResponseEntity<>(responseMsg,HttpStatus.OK);
+	}
+	
+}
+
+
+	<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+<dependency>
+<groupId>javax.xml.bind</groupId>
+<artifactId>jaxb-api</artifactId>
+<version>2.3.0</version>
+</dependency>
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.ge</groupId>
+	<artifactId>rest</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>rest</name>
+	<description>Demo project for Spring Boot</description>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+<dependency>
+<groupId>javax.xml.bind</groupId>
+<artifactId>jaxb-api</artifactId>
+<version>2.3.0</version>
+</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
