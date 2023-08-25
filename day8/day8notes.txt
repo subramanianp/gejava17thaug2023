@@ -1,0 +1,72 @@
+Accept Header:- used by the client to inform the restful service what type of content it prefers as response.
+		This is very much common for GET requests.
+		Format sent by server to client
+
+Content-Type:- used by the client to inform the restful service what type of content it sends to the server.
+		This is very common for POST and PUT requests.
+		Format sent by client to server.
+
+client-----------controller/restcontroller---------service---------repository------------database/legacy data 
+
+client tier------presentation tier-----------------business tier---integration tier------resource tier
+
+client code-------controller------------------------service-----------repository-----------db
+
+For using jpa with spring framework, spring boot provides a dependency called spring data jpa.
+
+
+The Repository which we create in the integration tier is an interface which extends from another 
+interface called JpaRepository.
+
+Spring boot provides automatic implementation for the methods based on the entity and primary key
+used with JpaRepository.
+
+The repository interface should be prefixed with an annotation called @Repository.
+
+The @Repository annotation is equivalent to @Component and used to denote that it is used to 
+interact with DB.
+
+	
+Jackson is a popular parser used for marshalling java object to json and vice versa.
+
+
+Micro Services:
+
+Microservices should provide:
+
+1. Service Registry--------The client does not need to know the physical location of the service.
+It is also called location transparency.
+Spring Boot provides a component called EurekaServer as a Service Registry.
+
+2. Client Proxy-----------The client code should be simple. There should be a proxy exposed by the 
+service to the client.
+
+client--------------proxy---------------------service
+
+3. Load Balancing --------Multiple instances of the same micro service may run in different locations.
+There should be a load balancing capability so that a single server is not servicing large number of 
+requests.
+
+For  Client Proxy and Load Balancing, spring boot provides a component called Feign.
+
+4. There should be a common api gateway----- If there is a common logic for multiple services
+like logging,security and transaction , that logic can be placed in the api gateway.
+
+Spring Cloud Gateway and  Zull Api gateway are provided by spring boot for common api gateway functionality.
+
+5. Externalized Configuration----------Spring Boot provides Spring Cloud Config to externaize the microservice
+configuration.
+
+
+periasamy.subramanian@gmail.com
+9880372634
+
+
+
+
+
+
+Micro Service:
+
+
+
